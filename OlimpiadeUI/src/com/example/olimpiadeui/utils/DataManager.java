@@ -1,0 +1,839 @@
+package com.example.olimpiadeui.utils;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import com.example.olimpiadeui.R;
+import com.example.olimpiadeui.Model.Faculty;
+import com.example.olimpiadeui.Model.Group;
+import com.example.olimpiadeui.Model.Match;
+import com.example.olimpiadeui.Model.Sport;
+import com.example.olimpiadeui.Model.SportCategory;
+
+
+public class DataManager {
+	private SQLiteDatabase db;
+	private SQLiteHelper dbHelper;
+	private static DataManager dm;
+	private static Context context;
+	
+	private String[] api = {"faculties", "groups", "matches",
+			"sports", "sport_categories", "deleted"};
+	
+//	private String[] initialFaculty = {"FK", "FKG", "FMIPA", "FT", "FH", "FE",
+//			"FIB", "FPsi", "FISIP", "FKM", "Fasilkom", "FIK", "FF", "Vokasi"};
+	private int[] logoFaculty = {R.drawable.fk, R.drawable.fkg, R.drawable.fmipa,
+			R.drawable.ft, R.drawable.fh, R.drawable.fe, R.drawable.fib,
+			R.drawable.fpsi, R.drawable.fisip, R.drawable.fkm, R.drawable.fasilkom,
+			R.drawable.fik, R.drawable.ff, R.drawable.vokasi};
+	
+//	private String[] sportName = {"Atletik", "Badminton", "Basket", "Futsal",
+//			"Hockey", "Renang", "Sepak Bola", "Taekwondo", "Tenis Lapangan",
+//			"Tenis Meja", "Voli"};
+
+	private int[] sportLogo = {R.drawable.atletik,
+			R.drawable.bulutangkis, R.drawable.basket,
+			R.drawable.futsal, R.drawable.hockey,
+			R.drawable.renang, R.drawable.sepakbola,
+			R.drawable.taekwondo, R.drawable.tenis,
+			R.drawable.tenis_meja, R.drawable.voli};
+	
+	private String[] column_match = {SQLiteHelper.MATCH_ID, SQLiteHelper.GROUP_ID,
+			SQLiteHelper.SPORT_ID, SQLiteHelper.SPORT_CATEGORY_ID,
+			SQLiteHelper.PARTICIPANT1_NAME, SQLiteHelper.PARTICIPANT2_NAME,
+			SQLiteHelper.FACULTY1_ID, SQLiteHelper.FACULTY2_ID,
+			SQLiteHelper.SCORE1, SQLiteHelper.SCORE2, SQLiteHelper.KNOCKOUT_LEVEL,
+			SQLiteHelper.KNOCKOUT_KEY, SQLiteHelper.LOCATION, SQLiteHelper.MATCH_DAY,
+			SQLiteHelper.MATCH_DATE, SQLiteHelper.START_TIME, SQLiteHelper.END_TIME,
+			SQLiteHelper.MILLIS_TIME
+	};
+	
+	private String[] column_sport = {SQLiteHelper.SPORT_ID, SQLiteHelper.NAME,
+			SQLiteHelper.SPORT_LOGO
+	};
+	
+	private String[] column_sport_category = {SQLiteHelper.SPORT_CATEGORY_ID,
+			SQLiteHelper.SPORT_ID, SQLiteHelper.NAME
+	};
+	
+	private String[] column_group = {SQLiteHelper.GROUP_ID,
+			SQLiteHelper.SPORT_CATEGORY_ID, SQLiteHelper.NAME};
+	
+	private String[] column_faculty = {SQLiteHelper.FACULTY_ID,
+			SQLiteHelper.FACULTY_INITIAL, SQLiteHelper.NAME,
+			SQLiteHelper.GOLD_MEDAL, SQLiteHelper.SILVER_MEDAL,
+			SQLiteHelper.BRONZE_MEDAL, SQLiteHelper.FACULTY_LOGO
+	};
+	
+	private String[] column_last_updated = {SQLiteHelper.LAST_UPDATED_ID,
+			SQLiteHelper.LAST_UPDATED_TIME
+	};
+	
+	public static void createDataManager(Context context) {
+		if (dm == null)
+			dm = new DataManager(context);
+	}
+	
+	public static DataManager getDataManager() {
+		return dm;
+	}
+	
+	public static Context getContext() {
+		return context;
+	}
+	
+	public DataManager(Context context) {
+		dbHelper = new SQLiteHelper(context);
+		this.context = context;
+	}
+	
+	public void open() throws SQLException {
+		db = dbHelper.getWritableDatabase();
+	}
+	
+	public void close() {
+		dbHelper.close();
+	}
+	
+//	public void createMatch(int MID, int GID, int SID, int SCID, String pName1,
+//			String pName2, int FID1, int FID2, int knockoutLvl, int score1,
+//			int score2, String lokasi, String matchDay, String matchDate,
+//			String startTime, String endTime, int millisTime) {
+//		ContentValues values = new ContentValues();
+//		
+//		values.put(SQLiteHelper.MATCH_ID, MID);
+//		values.put(SQLiteHelper.GROUP_ID, GID);
+//		values.put(SQLiteHelper.SPORT_ID, SID);
+//		values.put(SQLiteHelper.SPORT_CATEGORY_ID, SCID);
+//		values.put(SQLiteHelper.PARTICIPANT1_NAME, pName1);
+//		values.put(SQLiteHelper.PARTICIPANT2_NAME, pName2);
+//		values.put(SQLiteHelper.FACULTY1_ID, FID1);
+//		values.put(SQLiteHelper.FACULTY2_ID, FID2);
+//		values.put(SQLiteHelper.KNOCKOUT_LEVEL, knockoutLvl);
+//		values.put(SQLiteHelper.SCORE1, score1);
+//		values.put(SQLiteHelper.SCORE2, score2);
+//		values.put(SQLiteHelper.LOCATION, lokasi);
+//		values.put(SQLiteHelper.MATCH_DAY, matchDay);
+//		values.put(SQLiteHelper.MATCH_DATE, matchDate);
+//		values.put(SQLiteHelper.START_TIME, startTime);
+//		values.put(SQLiteHelper.END_TIME, endTime);
+//		values.put(SQLiteHelper.MILLIS_TIME, millisTime);
+//		
+//		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH, column_match,
+//				SQLiteHelper.MATCH_ID + " = " + MID, null, null, null, null);
+//		
+//		if (cursor.getCount() == 0)
+//			db.insert(SQLiteHelper.TABLE_MATCH, null, values);
+//		else {
+//			String whereArgs = SQLiteHelper.MATCH_ID + " = " + MID;
+//			db.update(SQLiteHelper.TABLE_MATCH, values, whereArgs, null);
+//		}
+//		
+//		cursor.close();
+//	}
+	
+	public void createMatch(JSONObject obj) throws JSONException {
+		ContentValues values = new ContentValues();
+		values.put(SQLiteHelper.MATCH_ID, obj.getInt(SQLiteHelper.MATCH_ID));
+		values.put(SQLiteHelper.GROUP_ID, obj.getInt(SQLiteHelper.GROUP_ID));
+		values.put(SQLiteHelper.SPORT_ID, obj.getInt(SQLiteHelper.SPORT_ID));
+		values.put(SQLiteHelper.SPORT_CATEGORY_ID, obj.getInt(SQLiteHelper.SPORT_CATEGORY_ID));
+		values.put(SQLiteHelper.PARTICIPANT1_NAME, obj.getString(SQLiteHelper.PARTICIPANT1_NAME));
+		values.put(SQLiteHelper.PARTICIPANT2_NAME, obj.getString(SQLiteHelper.PARTICIPANT2_NAME));
+		values.put(SQLiteHelper.FACULTY1_ID, obj.getInt(SQLiteHelper.FACULTY1_ID));
+		values.put(SQLiteHelper.FACULTY2_ID, obj.getInt(SQLiteHelper.FACULTY2_ID));
+		values.put(SQLiteHelper.KNOCKOUT_LEVEL, obj.getInt(SQLiteHelper.KNOCKOUT_LEVEL));
+		values.put(SQLiteHelper.KNOCKOUT_KEY, obj.getString(SQLiteHelper.KNOCKOUT_KEY));
+		values.put(SQLiteHelper.SCORE1, obj.getInt(SQLiteHelper.SCORE1));
+		values.put(SQLiteHelper.SCORE2, obj.getInt(SQLiteHelper.SCORE2));
+		values.put(SQLiteHelper.LOCATION, obj.getString(SQLiteHelper.LOCATION));
+		values.put(SQLiteHelper.MATCH_DAY, obj.getString(SQLiteHelper.MATCH_DAY));
+		values.put(SQLiteHelper.MATCH_DATE, obj.getString(SQLiteHelper.MATCH_DATE));
+		values.put(SQLiteHelper.START_TIME, obj.getString(SQLiteHelper.START_TIME));
+		values.put(SQLiteHelper.END_TIME, obj.getString(SQLiteHelper.END_TIME));
+		values.put(SQLiteHelper.MILLIS_TIME, obj.getLong(SQLiteHelper.MILLIS_TIME));
+		
+		int MID = obj.getInt(SQLiteHelper.MATCH_ID);
+		
+		String whereClause = SQLiteHelper.MATCH_ID + " = " + MID;
+		
+		int rowUpdated = db.update(SQLiteHelper.TABLE_MATCH, values, whereClause, null);
+		
+		if (rowUpdated == 0)
+			db.insert(SQLiteHelper.TABLE_MATCH, null, values);
+	}
+	
+//	public Group createGroup(int SCID, String name) {
+//		ContentValues values = new ContentValues();
+//		values.put(SQLiteHelper.SPORT_CATEGORY_ID, SCID);
+//		values.put(SQLiteHelper.NAME, name);
+//		
+//		long insertId = db.insert(SQLiteHelper.TABLE_GROUP, null, values);
+//		Cursor cursor = db.query(SQLiteHelper.TABLE_GROUP, column_group,
+//				SQLiteHelper.GROUP_ID + " = " + insertId, null, null, null, null);
+//		cursor.moveToFirst();
+//		
+//		Group newGroup = cursorToGroup(cursor);
+//		cursor.close();
+//		
+//		return newGroup;
+//	}
+	
+	public void createGroup(JSONObject obj) throws JSONException {
+		ContentValues values = new ContentValues();
+		values.put(SQLiteHelper.GROUP_ID, obj.getInt(SQLiteHelper.GROUP_ID));
+		values.put(SQLiteHelper.SPORT_CATEGORY_ID, obj.getInt(SQLiteHelper.SPORT_CATEGORY_ID));
+		values.put(SQLiteHelper.NAME, obj.getString(SQLiteHelper.NAME));
+		
+		int GID = obj.getInt(SQLiteHelper.GROUP_ID);
+		
+		String whereClause = SQLiteHelper.GROUP_ID + " = " + GID;
+		
+		int rowUpdated = db.update(SQLiteHelper.TABLE_GROUP, values, whereClause, null);
+		
+		if (rowUpdated == 0)
+			db.insert(SQLiteHelper.TABLE_GROUP, null, values);
+	}
+	
+//	public SportCategory createSportCategory(int SID, String name) {
+//		ContentValues values = new ContentValues();
+//		values.put(SQLiteHelper.SPORT_ID, SID);
+//		values.put(SQLiteHelper.NAME, name);
+//		
+//		long insertId = db.insert(SQLiteHelper.TABLE_SPORT_CATEGORY, null, values);
+//		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT_CATEGORY, column_sport_category,
+//				SQLiteHelper.SPORT_CATEGORY_ID + " = " + insertId, null, null, null, null);
+//		cursor.moveToFirst();
+//		
+//		SportCategory newSportCategory = cursorToSportCategory(cursor);
+//		cursor.close();
+//		
+//		return newSportCategory;
+//	}
+	
+	public void createSportCategory(JSONObject obj) throws JSONException {
+		ContentValues values = new ContentValues();
+		values.put(SQLiteHelper.SPORT_CATEGORY_ID, obj.getInt(SQLiteHelper.SPORT_CATEGORY_ID));
+		values.put(SQLiteHelper.SPORT_ID, obj.getInt(SQLiteHelper.SPORT_ID));
+		values.put(SQLiteHelper.NAME, obj.getString(SQLiteHelper.NAME));
+		
+		int SCID = obj.getInt(SQLiteHelper.SPORT_CATEGORY_ID);
+		
+		String whereClause = SQLiteHelper.SPORT_CATEGORY_ID + " = " + SCID;
+		
+		int rowUpdated = db.update(SQLiteHelper.TABLE_SPORT_CATEGORY, values, whereClause, null);
+		
+		if (rowUpdated == 0)
+			db.insert(SQLiteHelper.TABLE_SPORT_CATEGORY, null, values);
+	}
+	
+//	public Sport createSport(String name) {
+//		ContentValues values = new ContentValues();
+//		values.put(SQLiteHelper.NAME, name);
+//		
+//		for (int i = 0; i < sportName.length; ++i) {
+//			String s = initialFaculty[i];
+//			
+//			if (s.equalsIgnoreCase(initial))
+//				values.put(SQLiteHelper.FACULTY_LOGO, logoFaculty[i]);
+//		}
+//		if (name.equals("athletics"))
+//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.athletics);
+//		else if (name.equals("badminton"))
+//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.badminton);
+//		else if (name.equals("basketball"))
+//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.basketball);
+//		else if (name.equals("football"))
+//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.football);
+//		else if (name.equals("hockey"))
+//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.hockey);
+//		else if (name.equals("swimming"))
+//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.swimming);
+//		else if (name.equals("table_tennis"))
+//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.table_tennis);
+//		else if (name.equals("taekwondo"))
+//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.taekwondo);
+//		else if (name.equals("tennis"))
+//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.tennis);
+//		
+//		long insertId = db.insert(SQLiteHelper.TABLE_SPORT, null, values);
+//		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT, column_sport,
+//				SQLiteHelper.SPORT_ID + " = " + insertId, null, null, null, null);
+//		cursor.moveToFirst();
+//		
+//		Sport newSport = cursorToSport(cursor);
+//		cursor.close();
+//		
+//		return newSport;
+//	}
+	
+	public void createSport(JSONObject obj) throws JSONException {
+		ContentValues values = new ContentValues();
+		values.put(SQLiteHelper.SPORT_ID, obj.getInt(SQLiteHelper.SPORT_ID));
+		values.put(SQLiteHelper.NAME, obj.getString(SQLiteHelper.NAME));
+		
+		int SID = obj.getInt(SQLiteHelper.SPORT_ID);
+		values.put(SQLiteHelper.SPORT_LOGO, sportLogo[SID - 1]);
+		
+		String whereClause = SQLiteHelper.SPORT_ID + " = " + SID;
+		
+		int rowUpdated = db.update(SQLiteHelper.TABLE_SPORT, values, whereClause, null);
+		
+		if (rowUpdated == 0)
+			db.insert(SQLiteHelper.TABLE_SPORT, null, values);
+	}
+	
+//	public Faculty createFaculty(int gold, int silver, int bronze,
+//			String name, String initial) {
+//		ContentValues values = new ContentValues();
+//		values.put(SQLiteHelper.GOLD_MEDAL, gold);
+//		values.put(SQLiteHelper.SILVER_MEDAL, silver);
+//		values.put(SQLiteHelper.BRONZE_MEDAL, bronze);
+//		
+//		for (int i = 0; i < initialFaculty.length; ++i) {
+//			String s = initialFaculty[i];
+//			
+//			if (s.equalsIgnoreCase(initial))
+//				values.put(SQLiteHelper.FACULTY_LOGO, logoFaculty[i]);
+//		}
+//		
+//		values.put(SQLiteHelper.NAME, name);
+//		values.put(SQLiteHelper.FACULTY_INITIAL, initial);
+//		
+//		long insertId = db.insert(SQLiteHelper.TABLE_FACULTY, null, values);
+//		Cursor cursor = db.query(SQLiteHelper.TABLE_FACULTY, column_faculty,
+//				SQLiteHelper.FACULTY_ID + " = " + insertId, null, null, null, null);
+//		cursor.moveToFirst();
+//		
+//		Faculty newFaculty = cursorToFaculty(cursor);
+//		cursor.close();
+//		
+//		return newFaculty;
+//	}
+	
+	public void createFaculty(JSONObject obj) throws JSONException {
+		ContentValues values = new ContentValues();
+		values.put(SQLiteHelper.FACULTY_ID, obj.getInt(SQLiteHelper.FACULTY_ID));
+		values.put(SQLiteHelper.GOLD_MEDAL, obj.getInt(SQLiteHelper.GOLD_MEDAL));
+		values.put(SQLiteHelper.SILVER_MEDAL, obj.getInt(SQLiteHelper.SILVER_MEDAL));
+		values.put(SQLiteHelper.BRONZE_MEDAL, obj.getInt(SQLiteHelper.BRONZE_MEDAL));
+		values.put(SQLiteHelper.NAME, obj.getString(SQLiteHelper.NAME));
+		values.put(SQLiteHelper.FACULTY_INITIAL, obj.getString(SQLiteHelper.FACULTY_INITIAL));
+		
+		int FID = obj.getInt(SQLiteHelper.FACULTY_ID);
+		values.put(SQLiteHelper.FACULTY_LOGO, logoFaculty[FID - 1]);
+		
+		String whereClause = SQLiteHelper.FACULTY_ID + " = " + FID;
+		
+		int rowUpdated = db.update(SQLiteHelper.TABLE_FACULTY, values, whereClause, null);
+		
+		if (rowUpdated == 0)
+			db.insert(SQLiteHelper.TABLE_FACULTY, null, values);
+	}
+	
+	public void createLastUpdated(int LUID, long LUTime) {
+		ContentValues values = new ContentValues();
+		values.put(SQLiteHelper.LAST_UPDATED_ID, LUID);
+		values.put(SQLiteHelper.LAST_UPDATED_TIME, LUTime);
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_LAST_UPDATED, column_last_updated,
+				SQLiteHelper.LAST_UPDATED_ID + " = " + LUID, null, null, null, null);
+		
+		if (cursor.getCount() == 0)
+			db.insert(SQLiteHelper.TABLE_LAST_UPDATED, null, values);
+		else {
+			String whereClause = SQLiteHelper.LAST_UPDATED_ID + " = " + LUID;
+			db.update(SQLiteHelper.TABLE_LAST_UPDATED, values, whereClause, null);
+		}
+			
+		cursor.close();
+	}
+	
+	public List<Match> getAllMatchesByGroup(int GID) {
+		List<Match> matches = new ArrayList<Match>();
+		
+		String selection = SQLiteHelper.GROUP_ID + " = '" + GID + "'";
+		String sortOrder = SQLiteHelper.MILLIS_TIME + " COLLATE LOCALIZED ASC";
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH, column_match, 
+				selection, null, null, null, sortOrder);
+		
+		cursor.moveToFirst();
+		
+		while (!cursor.isAfterLast()) {
+			Match match = cursorToMatch(cursor);
+			matches.add(match);
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return matches;
+	}
+	
+	public List<Match> getAllMatchesByFaculty(int FID) {
+		List<Match> matches = new ArrayList<Match>();
+		
+		String selection = SQLiteHelper.FACULTY_ID + " = '" + FID + "'";
+		String sortOrder = SQLiteHelper.FACULTY_ID + " COLLATE LOCALIZED ASC";
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH, column_match, 
+				selection, null, null, null, sortOrder);
+		
+		cursor.moveToFirst();
+		
+		while (!cursor.isAfterLast()) {
+			Match match = cursorToMatch(cursor);
+			matches.add(match);
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return matches;
+	}
+	
+	public List<Match> getAllMatchesByKnockoutLvlAndSCID(int knockoutLvl, int SCID) {
+		List<Match> matches = new ArrayList<Match>();
+		
+		String selection = SQLiteHelper.SPORT_CATEGORY_ID + " = '" + SCID + "'";
+		Log.d("Bzz", SCID + " " + knockoutLvl);
+		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH, column_match, 
+				selection, null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		while (!cursor.isAfterLast()) {
+			Match match = cursorToMatch(cursor);
+			
+			if (match.getKnockoutLvl() == knockoutLvl)
+				matches.add(match);
+			
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return matches;
+	}
+	
+	public List<Match> getAllMatchesByTime(long millis_time, boolean past) {
+		List<Match> matches = new ArrayList<Match>();
+		millis_time /= 1000;
+		
+		String selection = SQLiteHelper.MILLIS_TIME + ((past)?" <= '":" > '") + millis_time + "'";
+		String sortOrder = SQLiteHelper.MILLIS_TIME + " COLLATE LOCALIZED " + ((past)?"DESC":"ASC");
+		Log.d("Yeah", selection);
+		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH,
+				column_match, selection + "", null, null, null, sortOrder);
+		
+		cursor.moveToFirst();
+		
+		while (!cursor.isAfterLast()) {
+			Match match = cursorToMatch(cursor);
+			matches.add(match);
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return matches;
+	}
+	
+	public List<SportCategory> getAllSportCategoriesBySID(int SID) {
+		List<SportCategory> sportCategories = new ArrayList<SportCategory>();
+		
+		String selection = SQLiteHelper.SPORT_ID + " = " + SID;
+		//String sortOrder = SQLiteHelper.MILLIS_TIME + " COLLATE LOCALIZED " + ((past)?"DESC":"ASC");
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT_CATEGORY,
+				column_sport_category, selection, null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		while (!cursor.isAfterLast()) {
+			SportCategory sportCategory = cursorToSportCategory(cursor);
+			sportCategories.add(sportCategory);
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return sportCategories;
+	}
+	
+	public List<Faculty> getAllFaculties() {
+		List<Faculty> faculties = new ArrayList<Faculty>();
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_FACULTY,
+				column_faculty, null, null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		while (!cursor.isAfterLast()) {
+			Faculty faculty = cursorToFaculty(cursor);
+			faculties.add(faculty);
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return faculties;
+	}
+	
+	public Faculty getFacultyByFID(int FID) {
+		String selection = SQLiteHelper.FACULTY_ID + " = " + FID;
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_FACULTY,
+				column_faculty, selection, null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		Faculty faculty = cursorToFaculty(cursor);
+		
+		cursor.close();
+		
+		return faculty;
+	}
+	
+	public List<Group> getAllGroupsBySCID(int SCID) {
+		List<Group> groups = new ArrayList<Group>();
+		
+		String selection = SQLiteHelper.SPORT_CATEGORY_ID + " = " + SCID;
+		String sortOrder = SQLiteHelper.GROUP_ID + " COLLATE LOCALIZED ASC";
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_GROUP,
+				column_group, selection, null, null, null, sortOrder);
+		
+		cursor.moveToFirst();
+		
+		while (!cursor.isAfterLast()) {
+			Group group = cursorToGroup(cursor);
+			groups.add(group);
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return groups;
+	}
+	
+	public List<Integer> getAllKnockoutLevelBySCID(int SCID) {
+		List<Integer> knockoutLvls = new ArrayList<Integer>();
+		int sz = 0;
+		
+		String selection = SQLiteHelper.SPORT_CATEGORY_ID + " = " + SCID;
+		String sortOrder = SQLiteHelper.KNOCKOUT_LEVEL + " COLLATE LOCALIZED DESC";
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH,
+				column_match, selection, null, null, null, sortOrder);
+		
+		cursor.moveToFirst();
+		Log.d("Level", "" + cursor.getCount());
+		while (!cursor.isAfterLast()) {
+			int level = cursor.getInt(cursor.getColumnIndex(SQLiteHelper.KNOCKOUT_LEVEL));
+			
+			if ((level != -1) && ((sz == 0) || (knockoutLvls.get(sz - 1) != level))) {
+				knockoutLvls.add(level);
+				++sz;
+			}
+			
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return knockoutLvls;
+	}
+	
+	public List<Sport> getAllSports() {
+		List<Sport> sports = new ArrayList<Sport>();
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT,
+				column_sport, null, null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		while (!cursor.isAfterLast()) {
+			Sport sport = cursorToSport(cursor);
+			sports.add(sport);
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return sports;
+	}
+	
+	public Sport getSportBySID(int SID) {
+		String selection = SQLiteHelper.SPORT_ID + " = " + SID;
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT,
+				column_sport, selection, null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		Sport sport = cursorToSport(cursor);
+		
+		cursor.close();
+		
+		return sport;
+	}
+	
+	public String getSportCategoryName(int SCID) {
+		String selection = SQLiteHelper.SPORT_CATEGORY_ID + " = '" + SCID + "'";
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT_CATEGORY,
+				column_sport_category, selection, null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		SportCategory sportCategory = cursorToSportCategory(cursor);
+		
+		cursor.close();
+		
+		return sportCategory.getName();
+	}
+	
+	public String getGroupName(int GID) {
+		String selection = SQLiteHelper.GROUP_ID + " = '" + GID + "'";
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_GROUP,
+				column_group, selection, null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		Group group = cursorToGroup(cursor);
+		
+		cursor.close();
+		
+		return group.getName();
+	}
+	
+	public int getFacultyLogo(int FID) {
+		if (FID == -1)
+			return R.drawable.ui;
+		
+		String selection = SQLiteHelper.FACULTY_ID + " = '" + FID + "'";
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_FACULTY,
+				column_faculty, selection, null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		Faculty faculty = cursorToFaculty(cursor);
+		
+		cursor.close();
+		
+		return faculty.getLogo();
+	}
+	
+	private long getLastUpdateTime(int LUID) {
+		String selection = SQLiteHelper.LAST_UPDATED_ID + " = " + LUID;
+		
+		Cursor cursor = db.query(SQLiteHelper.TABLE_LAST_UPDATED,
+				column_last_updated, selection, null, null, null, null);
+		
+		if (cursor.getCount() == 0) {
+			createLastUpdated(1, 0);
+			cursor = db.query(SQLiteHelper.TABLE_LAST_UPDATED,
+					column_last_updated, selection, null, null, null, null);
+		}
+		
+		cursor.moveToFirst();
+		
+		long ret = cursor.getLong(1);
+		
+		cursor.close();
+		
+		return ret;
+	}
+	
+	private Match cursorToMatch(Cursor cursor) {
+		int ind = 0;
+		
+		Match match = new Match();
+		match.setMID(cursor.getInt(ind++));
+		match.setGID(cursor.getInt(ind++));
+		match.setSID(cursor.getInt(ind++));
+		match.setSCID(cursor.getInt(ind++));
+		match.setpName1(cursor.getString(ind++));
+		match.setpName2(cursor.getString(ind++));
+		match.setFID1(cursor.getInt(ind++));
+		match.setFID2(cursor.getInt(ind++));
+		match.setScore1(cursor.getInt(ind++));
+		match.setScore2(cursor.getInt(ind++));
+		match.setKnockoutLvl(cursor.getInt(ind++));
+		match.setKnockoutKey(cursor.getString(ind++));
+		match.setLokasi(cursor.getString(ind++));
+		match.setMatchDay(cursor.getString(ind++));
+		match.setMatchDate(cursor.getString(ind++));
+		match.setStartTime(cursor.getString(ind++));
+		match.setEndTime(cursor.getString(ind++));
+		match.setMillisTime(cursor.getInt(ind++));
+		
+		return match;
+	}
+	
+	private Sport cursorToSport(Cursor cursor) {
+		int ind = 0;
+		Sport sport = new Sport();
+		
+		sport.setSID(cursor.getInt(ind++));
+		sport.setName(cursor.getString(ind++));
+		sport.setLogo(cursor.getInt(ind++));
+		
+		return sport;
+	}
+	
+	private SportCategory cursorToSportCategory(Cursor cursor) {
+		int ind = 0;
+		SportCategory sc = new SportCategory();
+		
+		sc.setSCID(cursor.getInt(ind++));
+		sc.setSID(cursor.getInt(ind++));
+		sc.setName(cursor.getString(ind++));
+		
+		return sc;
+	}
+	
+	private Group cursorToGroup(Cursor cursor) {
+		int ind = 0;
+		Group group = new Group();
+		
+		group.setGID(cursor.getInt(ind++));
+		group.setSCID(cursor.getInt(ind++));
+		group.setName(cursor.getString(ind++));
+		
+		return group;
+	}
+
+	private Faculty cursorToFaculty(Cursor cursor) {
+		int ind = 0;
+		Faculty f = new Faculty();
+		
+		f.setFID(cursor.getInt(ind++));
+		f.setInitialName(cursor.getString(ind++));
+		f.setName(cursor.getString(ind++));
+		f.setGold(cursor.getInt(ind++));
+		f.setSilver(cursor.getInt(ind++));
+		f.setBronze(cursor.getInt(ind++));
+		f.setLogo(cursor.getInt(ind++));
+		
+		return f;
+	}
+	
+	public void deleteData(JSONObject obj) throws JSONException {
+		String tableName = obj.getString("table");
+		int row_id = obj.getInt("id");
+		
+		String whereClause = tableName.toUpperCase() + "_ID = " + row_id;
+		
+		db.delete("table_" + tableName, whereClause, null);
+	}
+	
+	public int refreshDatabase() {
+		long lastUpdatedTime = getLastUpdateTime(1);
+		long currTime = java.lang.System.currentTimeMillis();
+		int status = 400;
+		
+		String urlAPI = "http://dev.nandarustam.id/olimuiapp/api/get_";
+		
+		try {
+			for (int numAPI = 0; numAPI < api.length; ++numAPI) {
+				Log.d("waktu", "" + (lastUpdatedTime / 1000));
+				URL u = new URL(urlAPI + api[numAPI] + "/" + (lastUpdatedTime / 1000));
+//				URL u = new URL("http://www.labs.pandagostudio.com/olimpiadeui/api/get_" + api[numAPI] + "/0");
+				HttpURLConnection con = (HttpURLConnection) u.openConnection();
+				con.setRequestMethod("GET");
+				con.setDoOutput(true);
+				Log.d("API", numAPI + "");
+				
+				con.connect();
+				status = con.getResponseCode();
+				
+				switch (status) {
+					case 200:
+					case 201: {
+						BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+						String input = reader.readLine();
+						
+						switch (numAPI) {
+							case 0: {
+								JSONArray listFaculty = new JSONArray(input);
+								
+								for (int i = 0; i < listFaculty.length(); ++i) {
+									JSONObject obj = listFaculty.getJSONObject(i);
+									createFaculty(obj);
+								}
+								break;
+							}
+							case 1: {
+								JSONArray listGroup = new JSONArray(input);
+								
+								for (int i = 0; i < listGroup.length(); ++i) {
+									JSONObject obj = listGroup.getJSONObject(i);
+									createGroup(obj);
+								}
+								break;
+							}
+							case 2: {
+								JSONArray listMatch = new JSONArray(input);
+								
+								for (int i = 0; i < listMatch.length(); ++i) {
+									JSONObject obj = listMatch.getJSONObject(i);
+									createMatch(obj);
+								}
+								break;
+							}
+							case 3: {
+								JSONArray listSport = new JSONArray(input);
+								
+								for (int i = 0; i < listSport.length(); ++i) {
+									JSONObject obj = listSport.getJSONObject(i);
+									createSport(obj);
+								}
+								break;
+							}
+							case 4: {
+								JSONArray listSportCategory = new JSONArray(input);
+								
+								for (int i = 0; i < listSportCategory.length(); ++i) {
+									JSONObject obj = listSportCategory.getJSONObject(i);
+									createSportCategory(obj);
+								}
+								break;
+							}
+							case 5: {
+								JSONArray listDeleteRow = new JSONArray(input);
+								
+								for (int i = 0; i < listDeleteRow.length(); ++i) {
+									JSONObject obj = listDeleteRow.getJSONObject(i);
+									deleteData(obj);
+								}
+								break;
+							}
+						}
+						
+						createLastUpdated(1, currTime);
+						break;
+					}
+				}
+			}
+			
+			
+		} catch (Exception e) {
+			Log.d("E", "Error " + e.toString());
+			status = 400;
+		}
+		
+		Log.d("A", "Sukses");
+		
+		return status; // success code
+	}
+}

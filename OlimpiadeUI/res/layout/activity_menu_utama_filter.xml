@@ -1,0 +1,110 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".MenuUtamaFilter" >
+	
+    <TextView
+        android:id="@+id/filter_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/filter"
+        android:textSize="24sp"
+        android:textColor="#26B99A"
+        android:textStyle="bold"
+    />
+    
+    <LinearLayout
+        android:id="@+id/layoutFacultyFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp" >
+        
+        <ImageView 
+            android:id="@+id/facultyLogoFilter"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"/>
+        
+        <Spinner
+	        android:id="@+id/faculties_spinner"
+	        android:layout_width="220dp"
+	        android:layout_height="wrap_content" 
+	        android:layout_marginLeft="20dp"
+	        android:scaleX="1.15"
+	        android:scaleY="1.15"/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="10dp" >
+
+        <Button
+            android:id="@+id/buttonPastFilter"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="#C0C2C4"
+            android:text="@string/past"
+            android:textAlignment="center"
+            android:textColor="#8F9194"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:onClick="onClickPast" />
+
+        <Button
+            android:id="@+id/buttonUpcomingFilter"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:text="@string/upcoming"
+            android:textAlignment="center"
+            android:textColor="#26B99A"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:onClick="onClickUpcoming" />
+    </LinearLayout>
+    
+    <ListView 
+        android:id="@+id/listScheduleFilter"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFFFFF"
+        android:padding="3dp"
+        android:visibility="gone" />
+	
+	<LinearLayout 
+        android:id="@+id/noFilter"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:visibility="gone"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="3dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tidak Ada Pertandingan"
+            android:textColor="#26B99A"
+            android:textSize="20sp"
+            android:alpha="0.5"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Olimpiade UI</string>
+    <string name="action_settings">Notifikasi</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_about">Tentang</string>
+    <string name="action_help">Bantuan</string>
+    <string name="action_more">More</string>
+    <string name="title_activity_activity1">Activity1</string>
+    <string name="title_activity_activity2">Activity2</string>
+    <string name="title_main_activity">Olimpiade UI</string>
+    <string name="title_help_activity">Bantuan</string>
+    <string name="title_about_activity">Tentang</string>
+    <string name="title_activity_menu_utama_jadwal">Olimpiade UI</string>
+    <string name="title_activity_menu_utama_bagan">Olimpiade UI</string>
+    <string name="title_activity_menu_utama_medali">Olimpiade UI</string>
+    <string name="title_activity_menu_utama_filter">Olimpiade UI</string>
+    <string name="title_activity_sport_list">Olimpiade UI</string>
+    <string name="schedule">JADWAL</string>
+    <string name="match_result">HASIL</string>
+    <string name="medals">MEDALI</string>
+    <string name="filter">FAKULTAS</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="past">Past</string>
+    <string name="knockout">Knockout</string>
+    <string name="group">Group</string>
+    <string name="about">TENTANG</string>
+    <string name="help">BANTUAN</string>
+    <string name="title_activity_schedule_page">Jadwal</string>
+    <string name="title_activity_activity_db">ActivityDB</string>
+    <string name="title_activity_activity_add_sport">ActivityAddSport</string>
+    <string name="title_activity_activity_add_sport_category">ActivityAddSportCategory</string>
+    <string name="title_activity_activity_add_group">ActivityAddGroup</string>
+    <string name="title_activity_activity_add_participant">ActivityAddParticipant</string>
+    <string name="title_activity_activity_add_match">ActivityAddMatch</string>
+    <string name="title_activity_group_result">GroupResult</string>
+    <string name="title_activity_knockout_result">KnockoutResult</string>
+    <string name="title_activity_result_page">Hasil</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_notification">Notifikasi</string>
+    <string name="title_activity_help_guide">Bantuan</string>
+
+</resources>
