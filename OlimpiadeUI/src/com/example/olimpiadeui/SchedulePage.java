@@ -37,9 +37,6 @@ public class SchedulePage extends Activity {
 			R.drawable.renang_round, R.drawable.sepakbola_round,
 			R.drawable.taekwondo_round, R.drawable.tenis_round,
 			R.drawable.tenis_meja_round, R.drawable.voli_round};
-	private String[] sportName = {"Atletik", "Bulutangkis", "Basket", "Futsal",
-	"Hockey", "Renang", "Sepak Bola", "Taekwondo", "Tenis",
-	"Tenis Meja", "Voli"};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +50,10 @@ public class SchedulePage extends Activity {
 		
 		Intent intent = getIntent();
 		SID = intent.getIntExtra("SID", -1);
+		Sport sport = dataManager.getSportBySID(SID);
 		
 		((ImageView) findViewById(R.id.logo_sport_schedule)).setImageResource(sportLogoRound[SID - 1]);
-		((TextView) findViewById(R.id.text_sport_schedule)).setText(sportName[SID - 1]);
+		((TextView) findViewById(R.id.text_sport_schedule)).setText(sport.getName());
 		
 		List<Match> listMatch = getAllMatchesByTimeAndSID(SID, false);
 		

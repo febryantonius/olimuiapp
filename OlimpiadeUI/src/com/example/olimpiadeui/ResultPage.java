@@ -46,9 +46,6 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 			R.drawable.renang_round, R.drawable.sepakbola_round,
 			R.drawable.taekwondo_round, R.drawable.tenis_round,
 			R.drawable.tenis_meja_round, R.drawable.voli_round};
-	private String[] sportName = {"Atletik", "Bulutangkis", "Basket", "Futsal",
-	"Hockey", "Renang", "Sepak Bola", "Taekwondo", "Tenis",
-	"Tenis Meja", "Voli"};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +93,7 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 		buttonGroup.setTextColor(Color.parseColor("#26B99A"));
 		
 		((ImageView) findViewById(R.id.logo_sport_result)).setImageResource(sportLogoRound[SID - 1]);
-		((TextView) findViewById(R.id.text_sport_result)).setText(sportName[SID - 1]);
+		((TextView) findViewById(R.id.text_sport_result)).setText(sport.getName());
 		
 		SCID = listSportCategory.get(0).getSCID();
 		
