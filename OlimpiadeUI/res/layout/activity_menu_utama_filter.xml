@@ -32,17 +32,17 @@
         
         <ImageView 
             android:id="@+id/facultyLogoFilter"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:gravity="center"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:layout_marginTop="3dp" />
         
         <Spinner
 	        android:id="@+id/faculties_spinner"
-	        android:layout_width="220dp"
+	        android:layout_width="0dp"
 	        android:layout_height="wrap_content" 
-	        android:layout_marginLeft="20dp"
-	        android:scaleX="1.15"
-	        android:scaleY="1.15"/>
+	        android:layout_weight="1"
+	        android:layout_marginLeft="10dp" />
     </LinearLayout>
     
     <LinearLayout

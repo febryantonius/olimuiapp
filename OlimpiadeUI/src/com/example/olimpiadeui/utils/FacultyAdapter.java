@@ -41,7 +41,7 @@ public class FacultyAdapter extends ArrayAdapter<Faculty> {
 		final String tweet = "Perolehan medali " + currFaculty.getInitialName() + ": " + currFaculty.getGold() +
 				" emas, " + currFaculty.getSilver() + " perak, dan " + currFaculty.getBronze() +
 				" perunggu, menduduki peringkat " + (position + 1) + " #OlimUIApps";
-		
+		final int pos = position;
 		convertView.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -49,6 +49,8 @@ public class FacultyAdapter extends ArrayAdapter<Faculty> {
 				// TODO Auto-generated method stub
 				String tweetUrl = "https://twitter.com/intent/tweet?text=" + tweet;
 				Uri uri = Uri.parse(tweetUrl);
+				v.setSelected(true);
+				v.getFocusables(pos);
 				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				getContext().startActivity(intent);

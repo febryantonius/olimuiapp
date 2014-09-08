@@ -95,7 +95,6 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 		buttonGroup.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		buttonGroup.setTextColor(Color.parseColor("#26B99A"));
 		
-		Log.d("Z", "SID = " + SID + " Sport Logo = " + sportLogoRound[SID - 1]);
 		((ImageView) findViewById(R.id.logo_sport_result)).setImageResource(sportLogoRound[SID - 1]);
 		((TextView) findViewById(R.id.text_sport_result)).setText(sportName[SID - 1]);
 		
@@ -132,7 +131,7 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.knockout_result, menu);
+		getMenuInflater().inflate(R.menu.result_page, menu);
 		return true;
 	}
 
@@ -265,13 +264,5 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public void yeahShare(View view) {
-		String tweetUrl = "https://twitter.com/intent/tweet?text=Coba Share";
-		Uri uri = Uri.parse(tweetUrl);
-		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(intent);
 	}
 }

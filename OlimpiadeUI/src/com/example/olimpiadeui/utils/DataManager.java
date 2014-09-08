@@ -109,43 +109,6 @@ public class DataManager {
 		dbHelper.close();
 	}
 	
-//	public void createMatch(int MID, int GID, int SID, int SCID, String pName1,
-//			String pName2, int FID1, int FID2, int knockoutLvl, int score1,
-//			int score2, String lokasi, String matchDay, String matchDate,
-//			String startTime, String endTime, int millisTime) {
-//		ContentValues values = new ContentValues();
-//		
-//		values.put(SQLiteHelper.MATCH_ID, MID);
-//		values.put(SQLiteHelper.GROUP_ID, GID);
-//		values.put(SQLiteHelper.SPORT_ID, SID);
-//		values.put(SQLiteHelper.SPORT_CATEGORY_ID, SCID);
-//		values.put(SQLiteHelper.PARTICIPANT1_NAME, pName1);
-//		values.put(SQLiteHelper.PARTICIPANT2_NAME, pName2);
-//		values.put(SQLiteHelper.FACULTY1_ID, FID1);
-//		values.put(SQLiteHelper.FACULTY2_ID, FID2);
-//		values.put(SQLiteHelper.KNOCKOUT_LEVEL, knockoutLvl);
-//		values.put(SQLiteHelper.SCORE1, score1);
-//		values.put(SQLiteHelper.SCORE2, score2);
-//		values.put(SQLiteHelper.LOCATION, lokasi);
-//		values.put(SQLiteHelper.MATCH_DAY, matchDay);
-//		values.put(SQLiteHelper.MATCH_DATE, matchDate);
-//		values.put(SQLiteHelper.START_TIME, startTime);
-//		values.put(SQLiteHelper.END_TIME, endTime);
-//		values.put(SQLiteHelper.MILLIS_TIME, millisTime);
-//		
-//		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH, column_match,
-//				SQLiteHelper.MATCH_ID + " = " + MID, null, null, null, null);
-//		
-//		if (cursor.getCount() == 0)
-//			db.insert(SQLiteHelper.TABLE_MATCH, null, values);
-//		else {
-//			String whereArgs = SQLiteHelper.MATCH_ID + " = " + MID;
-//			db.update(SQLiteHelper.TABLE_MATCH, values, whereArgs, null);
-//		}
-//		
-//		cursor.close();
-//	}
-	
 	public void createMatch(JSONObject obj) throws JSONException {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.MATCH_ID, obj.getInt(SQLiteHelper.MATCH_ID));
@@ -177,22 +140,6 @@ public class DataManager {
 			db.insert(SQLiteHelper.TABLE_MATCH, null, values);
 	}
 	
-//	public Group createGroup(int SCID, String name) {
-//		ContentValues values = new ContentValues();
-//		values.put(SQLiteHelper.SPORT_CATEGORY_ID, SCID);
-//		values.put(SQLiteHelper.NAME, name);
-//		
-//		long insertId = db.insert(SQLiteHelper.TABLE_GROUP, null, values);
-//		Cursor cursor = db.query(SQLiteHelper.TABLE_GROUP, column_group,
-//				SQLiteHelper.GROUP_ID + " = " + insertId, null, null, null, null);
-//		cursor.moveToFirst();
-//		
-//		Group newGroup = cursorToGroup(cursor);
-//		cursor.close();
-//		
-//		return newGroup;
-//	}
-	
 	public void createGroup(JSONObject obj) throws JSONException {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.GROUP_ID, obj.getInt(SQLiteHelper.GROUP_ID));
@@ -208,22 +155,6 @@ public class DataManager {
 		if (rowUpdated == 0)
 			db.insert(SQLiteHelper.TABLE_GROUP, null, values);
 	}
-	
-//	public SportCategory createSportCategory(int SID, String name) {
-//		ContentValues values = new ContentValues();
-//		values.put(SQLiteHelper.SPORT_ID, SID);
-//		values.put(SQLiteHelper.NAME, name);
-//		
-//		long insertId = db.insert(SQLiteHelper.TABLE_SPORT_CATEGORY, null, values);
-//		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT_CATEGORY, column_sport_category,
-//				SQLiteHelper.SPORT_CATEGORY_ID + " = " + insertId, null, null, null, null);
-//		cursor.moveToFirst();
-//		
-//		SportCategory newSportCategory = cursorToSportCategory(cursor);
-//		cursor.close();
-//		
-//		return newSportCategory;
-//	}
 	
 	public void createSportCategory(JSONObject obj) throws JSONException {
 		ContentValues values = new ContentValues();
@@ -241,46 +172,6 @@ public class DataManager {
 			db.insert(SQLiteHelper.TABLE_SPORT_CATEGORY, null, values);
 	}
 	
-//	public Sport createSport(String name) {
-//		ContentValues values = new ContentValues();
-//		values.put(SQLiteHelper.NAME, name);
-//		
-//		for (int i = 0; i < sportName.length; ++i) {
-//			String s = initialFaculty[i];
-//			
-//			if (s.equalsIgnoreCase(initial))
-//				values.put(SQLiteHelper.FACULTY_LOGO, logoFaculty[i]);
-//		}
-//		if (name.equals("athletics"))
-//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.athletics);
-//		else if (name.equals("badminton"))
-//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.badminton);
-//		else if (name.equals("basketball"))
-//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.basketball);
-//		else if (name.equals("football"))
-//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.football);
-//		else if (name.equals("hockey"))
-//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.hockey);
-//		else if (name.equals("swimming"))
-//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.swimming);
-//		else if (name.equals("table_tennis"))
-//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.table_tennis);
-//		else if (name.equals("taekwondo"))
-//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.taekwondo);
-//		else if (name.equals("tennis"))
-//			values.put(SQLiteHelper.SPORT_LOGO, R.drawable.tennis);
-//		
-//		long insertId = db.insert(SQLiteHelper.TABLE_SPORT, null, values);
-//		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT, column_sport,
-//				SQLiteHelper.SPORT_ID + " = " + insertId, null, null, null, null);
-//		cursor.moveToFirst();
-//		
-//		Sport newSport = cursorToSport(cursor);
-//		cursor.close();
-//		
-//		return newSport;
-//	}
-	
 	public void createSport(JSONObject obj) throws JSONException {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.SPORT_ID, obj.getInt(SQLiteHelper.SPORT_ID));
@@ -296,34 +187,6 @@ public class DataManager {
 		if (rowUpdated == 0)
 			db.insert(SQLiteHelper.TABLE_SPORT, null, values);
 	}
-	
-//	public Faculty createFaculty(int gold, int silver, int bronze,
-//			String name, String initial) {
-//		ContentValues values = new ContentValues();
-//		values.put(SQLiteHelper.GOLD_MEDAL, gold);
-//		values.put(SQLiteHelper.SILVER_MEDAL, silver);
-//		values.put(SQLiteHelper.BRONZE_MEDAL, bronze);
-//		
-//		for (int i = 0; i < initialFaculty.length; ++i) {
-//			String s = initialFaculty[i];
-//			
-//			if (s.equalsIgnoreCase(initial))
-//				values.put(SQLiteHelper.FACULTY_LOGO, logoFaculty[i]);
-//		}
-//		
-//		values.put(SQLiteHelper.NAME, name);
-//		values.put(SQLiteHelper.FACULTY_INITIAL, initial);
-//		
-//		long insertId = db.insert(SQLiteHelper.TABLE_FACULTY, null, values);
-//		Cursor cursor = db.query(SQLiteHelper.TABLE_FACULTY, column_faculty,
-//				SQLiteHelper.FACULTY_ID + " = " + insertId, null, null, null, null);
-//		cursor.moveToFirst();
-//		
-//		Faculty newFaculty = cursorToFaculty(cursor);
-//		cursor.close();
-//		
-//		return newFaculty;
-//	}
 	
 	public void createFaculty(JSONObject obj) throws JSONException {
 		ContentValues values = new ContentValues();
@@ -829,7 +692,7 @@ public class DataManager {
 			
 		} catch (Exception e) {
 			Log.d("E", "Error " + e.toString());
-			status = 400;
+			status = -1;
 		}
 		
 		Log.d("A", "Sukses");

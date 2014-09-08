@@ -1,0 +1,114 @@
+[
+	{
+		"FACULTY_ID":"1",
+		"FACULTY_INITIAL":"FK",
+		"NAME":"Fakultas Kedokteran",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"2",
+		"FACULTY_INITIAL":"FKG",
+		"NAME":"Fakultas Kedokteran Gigi",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"3",
+		"FACULTY_INITIAL":"FMIPA",
+		"NAME":"Fakultas Matematika dan Ilmu Pengetahuan Alam",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"4",
+		"FACULTY_INITIAL":"FT",
+		"NAME":"Fakultas Teknik",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"5",
+		"FACULTY_INITIAL":"FH",
+		"NAME":"Fakultas Hukum",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"6",
+		"FACULTY_INITIAL":"FE",
+		"NAME":"Fakultas Ekonomi",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"7",
+		"FACULTY_INITIAL":"FIB",
+		"NAME":"Fakultas Ilmu Pengetahuan Budaya",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"8",
+		"FACULTY_INITIAL":"FPsi",
+		"NAME":"Fakultas Psikologi",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"9",
+		"FACULTY_INITIAL":"FISIP",
+		"NAME":"Fakultas Ilmu Sosial dan Ilmu Politik",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"10",
+		"FACULTY_INITIAL":"FKM",
+		"NAME":"Fakultas Kesehatan Masyarakat",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"11",
+		"FACULTY_INITIAL":"Fasilkom",
+		"NAME":"Fakultas Ilmu Komputer",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"12",
+		"FACULTY_INITIAL":"FIK",
+		"NAME":"Fakultas Ilmu Keperawatan",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"13",
+		"FACULTY_INITIAL":"FF",
+		"NAME":"Fakultas Farmasi",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	},
+	{
+		"FACULTY_ID":"14",
+		"FACULTY_INITIAL":"Vokasi",
+		"NAME":"Program Vokasi",
+		"gold":"0",
+		"silver":"0",
+		"bronze":"0"
+	}
+]

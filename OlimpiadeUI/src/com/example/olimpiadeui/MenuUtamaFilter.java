@@ -50,7 +50,7 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 		listFaculty = dataManager.getAllFaculties();
 		listFacultyName = new ArrayList<String>();
 		
-		listFacultyName.add("Choose Faculty");
+		listFacultyName.add("Pilih Fakultas");
 		
 		for (Faculty f : listFaculty)
 			listFacultyName.add(f.getInitialName());
@@ -216,7 +216,7 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 		listFaculty = dataManager.getAllFaculties();
 		listFacultyName = new ArrayList<String>();
 		
-		listFacultyName.add("Choose Faculty");
+		listFacultyName.add("Pilih Fakultas");
 		
 		for (Faculty f : listFaculty)
 			listFacultyName.add(f.getInitialName());

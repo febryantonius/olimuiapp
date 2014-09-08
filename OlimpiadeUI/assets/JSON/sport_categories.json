@@ -1,0 +1,362 @@
+[
+	{
+		"SPORT_CATEGORY_ID":"1",
+		"SPORT_ID":"1",
+		"NAME":"Lari 100 Meter Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"2",
+		"SPORT_ID":"1",
+		"NAME":"Lari 100 Meter Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"3",
+		"SPORT_ID":"1",
+		"NAME":"Lari 200 Meter Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"4",
+		"SPORT_ID":"1",
+		"NAME":"Lari 200 Meter Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"5",
+		"SPORT_ID":"1",
+		"NAME":"Lari 400 Meter Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"6",
+		"SPORT_ID":"1",
+		"NAME":"Lari 400 Meter Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"7",
+		"SPORT_ID":"1",
+		"NAME":"Lari 800 Meter Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"8",
+		"SPORT_ID":"1",
+		"NAME":"Lari 800 Meter Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"9",
+		"SPORT_ID":"1",
+		"NAME":"Lari 1500 Meter Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"10",
+		"SPORT_ID":"1",
+		"NAME":"Lari 1500 Meter Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"11",
+		"SPORT_ID":"1",
+		"NAME":"Estafet 4x100 Meter Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"12",
+		"SPORT_ID":"1",
+		"NAME":"Estafet 4x100 Meter Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"13",
+		"SPORT_ID":"1",
+		"NAME":"Lari 5000 Meter Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"14",
+		"SPORT_ID":"1",
+		"NAME":"Lari 10000 Meter Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"15",
+		"SPORT_ID":"1",
+		"NAME":"Lompat Jauh Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"16",
+		"SPORT_ID":"1",
+		"NAME":"Lompat Jauh Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"17",
+		"SPORT_ID":"1",
+		"NAME":"Lempar Lembing"
+	},
+	{
+		"SPORT_CATEGORY_ID":"18",
+		"SPORT_ID":"1",
+		"NAME":"Tolak Peluru"
+	},
+	{
+		"SPORT_CATEGORY_ID":"19",
+		"SPORT_ID":"2",
+		"NAME":"Tunggal Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"20",
+		"SPORT_ID":"2",
+		"NAME":"Tunggal Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"21",
+		"SPORT_ID":"2",
+		"NAME":"Ganda Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"22",
+		"SPORT_ID":"2",
+		"NAME":"Ganda Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"23",
+		"SPORT_ID":"2",
+		"NAME":"Ganda Campuran"
+	},
+	{
+		"SPORT_CATEGORY_ID":"24",
+		"SPORT_ID":"3",
+		"NAME":"Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"25",
+		"SPORT_ID":"3",
+		"NAME":"Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"26",
+		"SPORT_ID":"4",
+		"NAME":"Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"27",
+		"SPORT_ID":"4",
+		"NAME":"Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"28",
+		"SPORT_ID":"5",
+		"NAME":"Campuran"
+	},
+	{
+		"SPORT_CATEGORY_ID":"29",
+		"SPORT_ID":"6",
+		"NAME":"50 Meter Gaya Dada Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"30",
+		"SPORT_ID":"6",
+		"NAME":"50 Meter Gaya Dada Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"31",
+		"SPORT_ID":"6",
+		"NAME":"50 Meter Gaya Bebas Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"32",
+		"SPORT_ID":"6",
+		"NAME":"50 Meter Gaya Bebas Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"33",
+		"SPORT_ID":"6",
+		"NAME":"50 Meter Gaya Kupu-Kupu Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"34",
+		"SPORT_ID":"6",
+		"NAME":"50 Meter Gaya Kupu-Kupu Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"35",
+		"SPORT_ID":"6",
+		"NAME":"50 Meter Gaya Punggung Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"36",
+		"SPORT_ID":"6",
+		"NAME":"50 Meter Gaya Punggung Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"37",
+		"SPORT_ID":"6",
+		"NAME":"4x50 Meter Estafet Bebas Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"38",
+		"SPORT_ID":"6",
+		"NAME":"4x50 Meter Estafet Bebas Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"39",
+		"SPORT_ID":"6",
+		"NAME":"4x50 Meter Estafet Ganti Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"40",
+		"SPORT_ID":"6",
+		"NAME":"4x50 Meter Estafet Ganti Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"41",
+		"SPORT_ID":"7",
+		"NAME":"Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"42",
+		"SPORT_ID":"8",
+		"NAME":"Putra Under 54 Kg (Max.54 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"43",
+		"SPORT_ID":"8",
+		"NAME":"Putra Under 58 Kg (54.01 - 58.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"44",
+		"SPORT_ID":"8",
+		"NAME":"Putra Under 63 Kg (58.01 - 63.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"45",
+		"SPORT_ID":"8",
+		"NAME":"Putra Under 68 Kg (63.01 - 68.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"46",
+		"SPORT_ID":"8",
+		"NAME":"Putra Under 74 Kg (68.01 - 74.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"47",
+		"SPORT_ID":"8",
+		"NAME":"Putra Under 80 Kg (74.01 - 80.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"48",
+		"SPORT_ID":"8",
+		"NAME":"Putra Under 87 Kg (80.01 - 87.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"49",
+		"SPORT_ID":"8",
+		"NAME":"Putra Over 87 Kg (Min. 87.01 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"50",
+		"SPORT_ID":"8",
+		"NAME":"Putra Pomsae"
+	},
+	{
+		"SPORT_CATEGORY_ID":"51",
+		"SPORT_ID":"8",
+		"NAME":"Putri Under 46 Kg (Max. 46 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"52",
+		"SPORT_ID":"8",
+		"NAME":"Putri Under 49 Kg (46.01 - 49.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"53",
+		"SPORT_ID":"8",
+		"NAME":"Putri Under 53 Kg (49.01 - 53.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"54",
+		"SPORT_ID":"8",
+		"NAME":"Putri Under 57 Kg (53.01 - 57.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"55",
+		"SPORT_ID":"8",
+		"NAME":"Putri Under 62 Kg (57.01 - 62.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"56",
+		"SPORT_ID":"8",
+		"NAME":"Putri Under 67 Kg (62.01 - 67.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"57",
+		"SPORT_ID":"8",
+		"NAME":"Putri Under 73 Kg (67.01 - 73.00 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"58",
+		"SPORT_ID":"8",
+		"NAME":"Putri Over 73 Kg (Min. 73.01 Kg)"
+	},
+	{
+		"SPORT_CATEGORY_ID":"59",
+		"SPORT_ID":"8",
+		"NAME":"Putri Pomsae"
+	},
+	{
+		"SPORT_CATEGORY_ID":"60",
+		"SPORT_ID":"9",
+		"NAME":"Tunggal Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"61",
+		"SPORT_ID":"9",
+		"NAME":"Tunggal Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"62",
+		"SPORT_ID":"9",
+		"NAME":"Ganda Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"63",
+		"SPORT_ID":"9",
+		"NAME":"Ganda Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"64",
+		"SPORT_ID":"9",
+		"NAME":"Ganda Campuran"
+	},
+	{
+		"SPORT_CATEGORY_ID":"65",
+		"SPORT_ID":"10",
+		"NAME":"Tunggal Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"66",
+		"SPORT_ID":"10",
+		"NAME":"Tunggal Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"67",
+		"SPORT_ID":"10",
+		"NAME":"Ganda Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"68",
+		"SPORT_ID":"10",
+		"NAME":"Ganda Putri"
+	},
+	{
+		"SPORT_CATEGORY_ID":"69",
+		"SPORT_ID":"10",
+		"NAME":"Ganda Campuran"
+	},
+	{
+		"SPORT_CATEGORY_ID":"70",
+		"SPORT_ID":"10",
+		"NAME":"Beregu"
+	},
+	{
+		"SPORT_CATEGORY_ID":"71",
+		"SPORT_ID":"11",
+		"NAME":"Putra"
+	},
+	{
+		"SPORT_CATEGORY_ID":"72",
+		"SPORT_ID":"11",
+		"NAME":"Putri"
+	}
+]

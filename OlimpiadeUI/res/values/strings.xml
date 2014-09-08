@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Olimpiade UI</string>
+    <string name="app_name">OlimpiadeUI App</string>
     <string name="action_settings">Notifikasi</string>
     <string name="action_refresh">Refresh</string>
-    <string name="action_about">Tentang</string>
+    <string name="action_about">Tentang Kami</string>
     <string name="action_help">Bantuan</string>
     <string name="action_more">More</string>
     <string name="title_activity_activity1">Activity1</string>
     <string name="title_activity_activity2">Activity2</string>
-    <string name="title_main_activity">Olimpiade UI</string>
+    <string name="title_main_activity">OlimpiadeUI App</string>
     <string name="title_help_activity">Bantuan</string>
-    <string name="title_about_activity">Tentang</string>
-    <string name="title_activity_menu_utama_jadwal">Olimpiade UI</string>
-    <string name="title_activity_menu_utama_bagan">Olimpiade UI</string>
-    <string name="title_activity_menu_utama_medali">Olimpiade UI</string>
-    <string name="title_activity_menu_utama_filter">Olimpiade UI</string>
-    <string name="title_activity_sport_list">Olimpiade UI</string>
+    <string name="title_about_activity">Tentang Kami</string>
+    <string name="title_activity_menu_utama_jadwal">OlimpiadeUI App</string>
+    <string name="title_activity_menu_utama_bagan">OlimpiadeUI App</string>
+    <string name="title_activity_menu_utama_medali">OlimpiadeUI App</string>
+    <string name="title_activity_menu_utama_filter">OlimpiadeUI App</string>
+    <string name="title_activity_sport_list">OlimpiadeUI App</string>
     <string name="schedule">JADWAL</string>
     <string name="match_result">HASIL</string>
     <string name="medals">MEDALI</string>
@@ -25,7 +25,7 @@
     <string name="past">Past</string>
     <string name="knockout">Knockout</string>
     <string name="group">Group</string>
-    <string name="about">TENTANG</string>
+    <string name="about">TENTANG KAMI</string>
     <string name="help">BANTUAN</string>
     <string name="title_activity_schedule_page">Jadwal</string>
     <string name="title_activity_activity_db">ActivityDB</string>
@@ -41,5 +41,7 @@
     <string name="title_activity_help">HelpActivity</string>
     <string name="title_activity_notification">Notifikasi</string>
     <string name="title_activity_help_guide">Bantuan</string>
+    <string name="title_activity_menu_utama">MenuUtama</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

@@ -1,11 +1,33 @@
 package com.example.olimpiadeui.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.example.olimpiadeui.MainActivity;
+import com.example.olimpiadeui.R;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
+	private int[] logoFaculty = {R.drawable.fk, R.drawable.fkg, R.drawable.fmipa,
+			R.drawable.ft, R.drawable.fh, R.drawable.fe, R.drawable.fib,
+			R.drawable.fpsi, R.drawable.fisip, R.drawable.fkm, R.drawable.fasilkom,
+			R.drawable.fik, R.drawable.ff, R.drawable.vokasi};
+	
+	private int[] sportLogo = {R.drawable.atletik,
+			R.drawable.bulutangkis, R.drawable.basket,
+			R.drawable.futsal, R.drawable.hockey,
+			R.drawable.renang, R.drawable.sepakbola,
+			R.drawable.taekwondo, R.drawable.tenis,
+			R.drawable.tenis_meja, R.drawable.voli};
+	
 	public static final String TABLE_MATCH = "table_match";
 	public static final String TABLE_FACULTY = "table_faculty";
 	public static final String TABLE_SPORT = "table_sport";
@@ -131,6 +153,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL(DB_CREATE_SPORT_CATEGORY);
 		db.execSQL(DB_CREATE_GROUP);
 		db.execSQL(DB_CREATE_LAST_UPDATED);
+		
+		insertFaculty(db);
+		insertSport(db);
+		insertSportCategory(db);
 	}
 
 	@Override
@@ -146,5 +172,103 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROUP);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_LAST_UPDATED);
 		onCreate(db);
+	}
+	
+	public String loadJSONFromAsset(String filename) {
+		String json = null;
+		
+		try {
+			InputStream inputStream = DataManager.getContext()
+										.getAssets()
+										.open("JSON/" + filename);
+			
+			int size = inputStream.available();
+			
+			byte[] buffer = new byte[size];
+			
+			inputStream.read(buffer);
+			inputStream.close();
+			
+			json = new String(buffer, "UTF-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return json;
+	}
+	
+	public void insertFaculty(SQLiteDatabase db) {
+		try {
+			JSONArray array = new JSONArray(loadJSONFromAsset("faculties.json"));
+			
+			for (int i = 0; i < array.length(); ++i) {
+				JSONObject obj = array.getJSONObject(i);
+				int FID = obj.getInt(SQLiteHelper.FACULTY_ID);
+				String initial = obj.getString(SQLiteHelper.FACULTY_INITIAL);
+				String name = obj.getString(SQLiteHelper.NAME);
+				int gold = obj.getInt(SQLiteHelper.GOLD_MEDAL);
+				int silver = obj.getInt(SQLiteHelper.SILVER_MEDAL);
+				int bronze = obj.getInt(SQLiteHelper.BRONZE_MEDAL);
+				int logo = logoFaculty[FID - 1];
+				
+				String query = "INSERT INTO table_faculty VALUES (" +
+											FID + ", '" +
+											initial + "', '" +
+											name + "', " +
+											gold + ", " +
+											silver + ", " +
+											bronze + ", " +
+											logo + ");";
+				
+				db.execSQL(query);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertSport(SQLiteDatabase db) {
+		try {
+			JSONArray array = new JSONArray(loadJSONFromAsset("sports.json"));
+			
+			for (int i = 0; i < array.length(); ++i) {
+				JSONObject obj = array.getJSONObject(i);
+				int SID = obj.getInt(SQLiteHelper.SPORT_ID);
+				String name = obj.getString(SQLiteHelper.NAME);
+				int logo = sportLogo[SID - 1];
+				
+				String query = "INSERT INTO table_sport VALUES (" +
+											SID + ", '" +
+											name + "', " +
+											logo + ");";
+				
+				db.execSQL(query);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertSportCategory(SQLiteDatabase db) {
+		try {
+			JSONArray array = new JSONArray(loadJSONFromAsset("sport_categories.json"));
+			
+			for (int i = 0; i < array.length(); ++i) {
+				JSONObject obj = array.getJSONObject(i);
+				int SCID = obj.getInt(SQLiteHelper.SPORT_CATEGORY_ID);
+				int SID = obj.getInt(SQLiteHelper.SPORT_ID);
+				String name = obj.getString(SQLiteHelper.NAME);
+				
+				String query = "INSERT INTO table_sport_category VALUES (" +
+											SCID + ", " +
+											SID + ", '" +
+											name + "');";
+				
+				db.execSQL(query);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 }
