@@ -3,6 +3,7 @@ package com.example.olimpiadeui;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +11,6 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import com.example.olimpiadeui.MenuUtama;
-
 import com.example.olimpiadeui.utils.DataManager;
 
 public class MainActivity extends Activity {
@@ -20,10 +20,13 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         
         DataManager.createDataManager(getApplicationContext());
-        new DownloadData().execute();
+        //new DownloadData().execute();
+        Intent intent = new Intent(MainActivity.this, MenuUtama.class);
+		startActivityForResult(intent, 1);
 	}
 	
 	@Override
@@ -46,7 +49,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(host, "Please Wait...", "Update data", true, false);
+			progressDialog = ProgressDialog.show(host, "Please Wait...", "Updating data...", true, true);
 			dm = DataManager.getDataManager();
 			dm.open();
 		}

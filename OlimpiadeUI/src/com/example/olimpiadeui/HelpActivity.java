@@ -94,6 +94,7 @@ package com.example.olimpiadeui;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -129,11 +130,12 @@ public class HelpActivity extends FragmentActivity {
     private static Resources resources;
     private static String[] pageTitle = {"Jadwal", "Hasil", "Medali", "Fakultas", "Share"};
     private static int[] helpImage = {R.drawable.help_jadwal, R.drawable.help_hasil,
-    							R.drawable.help_medali, R.drawable.help_medali,
-    							R.drawable.help_medali};
+    							R.drawable.help_medali, R.drawable.help_fakultas,
+    							R.drawable.help_share};
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_help);
         resources = getResources();
         

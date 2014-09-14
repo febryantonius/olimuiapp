@@ -6,6 +6,7 @@ import java.util.List;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -50,6 +51,7 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_result_page);
 		// Show the Up button in the action bar.
 		setupActionBar();

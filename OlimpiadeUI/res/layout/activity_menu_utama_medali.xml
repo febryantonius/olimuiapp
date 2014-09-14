@@ -17,7 +17,8 @@
         android:text="@string/medals"
         android:textSize="24sp"
         android:textColor="#26B99A"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+        android:layout_marginBottom="5dp" />
 	
     <LinearLayout
         android:paddingTop="20dp"
@@ -29,7 +30,7 @@
             android:id="@+id/dummy_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:paddingLeft="14dp"
             android:text="Fakultas"
             android:gravity="left|center_vertical"

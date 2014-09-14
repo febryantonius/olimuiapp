@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_menu_utama);
         activity = this;
 //        Log.d("main", "bikin service");
@@ -169,7 +171,7 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(host, "Please Wait...", "Update data", true, false);
+			progressDialog = ProgressDialog.show(host, "Please Wait...", "Updating data...", true, true);
 			dm = DataManager.getDataManager();
 			dm.open();
 		}

@@ -2,6 +2,7 @@ package com.example.olimpiadeui;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ public class AboutActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_about);
 	}
 

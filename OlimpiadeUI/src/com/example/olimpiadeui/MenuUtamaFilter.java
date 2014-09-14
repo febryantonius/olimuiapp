@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -38,6 +39,7 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_menu_utama_filter);
 		setupActionBar();
 		
