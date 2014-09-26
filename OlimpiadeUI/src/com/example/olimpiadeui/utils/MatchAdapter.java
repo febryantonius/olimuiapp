@@ -22,7 +22,6 @@ import com.example.olimpiadeui.R.layout;
 public class MatchAdapter extends ArrayAdapter<Match> {
 	private LayoutInflater inflater;
 	private List<Match> items;
-	private DataManager dataManager;
 	private boolean isSchedule, isPast;
 	
 	public MatchAdapter(Activity activity, List<Match> items, boolean isSchedule, boolean isPast) {
@@ -37,17 +36,14 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 	public View	getView(int position, View convertView, ViewGroup parent) {
 		convertView = inflater.inflate(R.layout.jadwal_pertandingan, null);
 		
-		dataManager = new DataManager(getContext());
-		dataManager.open();
-		
 		final Match currMatch = (Match) items.get(position);
 		
 		int SID = currMatch.getSID();
 		int SCID = currMatch.getSCID();
 		int GID = currMatch.getGID();
 		
-		String sport = dataManager.getSportBySID(SID).getName();
-		String sport_category = dataManager.getSportCategoryName(SCID);
+		String sport = DataUtility.getSportBySID(SID).getName();
+		String sport_category = DataUtility.getSportCategoryBySCID(SCID).getName();
 		String group = "";
 		String p1 = currMatch.getpName1();
 		String p2 = currMatch.getpName2();
@@ -55,8 +51,8 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 		String pName2 = p2;
 		int FID1 = currMatch.getFID1();
 		int FID2 = currMatch.getFID2();
-		int logoFaculty1 = dataManager.getFacultyLogo(FID1);
-		int logoFaculty2 = dataManager.getFacultyLogo(FID2);
+		int logoFaculty1 = DataUtility.getFaculty(FID1).getLogo();
+		int logoFaculty2 = DataUtility.getFaculty(FID2).getLogo();
 		int score1 = currMatch.getScore1();
 		int score2 = currMatch.getScore2();
 		
@@ -69,7 +65,7 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 		
 		if (isSchedule) {
 			if (GID != -1)
-				group = dataManager.getGroupName(GID);
+				group = DataUtility.getGroup(GID).getName();
 			else {
 				int knockoutLvl = currMatch.getKnockoutLvl();
 				
@@ -115,8 +111,8 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 		((ImageView) convertView.findViewById(R.id.logo_faculty_1)).setImageResource(logoFaculty1);
 		((ImageView) convertView.findViewById(R.id.logo_faculty_2)).setImageResource(logoFaculty2);
 		
-		String cabang = dataManager.getSportBySID(SID).getName();
-		String sC = dataManager.getSportCategoryName(SCID);
+		String cabang = DataUtility.getSportBySID(SID).getName();
+		String sC = DataUtility.getSportCategoryBySCID(SCID).getName();
 		String tanggal = currMatch.getMatchDate();
 		String waktu = currMatch.getStartTime();
 		String lokasi = currMatch.getLokasi();
@@ -126,11 +122,11 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 		if (isPast) {
 			tweet = "Pertandingan " + cabang + " - " + sC + " antara " + pName1 +
 						((score1 == -1) ? "" : " (" + score1 + ")") + " vs " + ((score2 == -1) ? "" : "(" + score2 + ") ") +
-						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + ". Selamat!" + " #OlimUIApps";
+						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + ". Selamat!" + " " + R.string.hashtag;
 		}
 		else {
 			tweet = "Tonton pertandingan " + cabang + " - " + sC + " antara " + pName1 + " vs " +
-						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + " #OlimUIApps";
+						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + " " + R.string.hashtag;
 		}
 		
 		convertView.setOnClickListener(new OnClickListener() {
@@ -145,8 +141,6 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 				getContext().startActivity(intent);
 			}
 		});
-		
-		dataManager.close();
 		
 		return convertView;
 	}

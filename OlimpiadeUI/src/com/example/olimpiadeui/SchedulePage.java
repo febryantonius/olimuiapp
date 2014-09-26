@@ -23,12 +23,11 @@ import android.widget.TextView;
 
 import com.example.olimpiadeui.Model.Match;
 import com.example.olimpiadeui.Model.Sport;
-import com.example.olimpiadeui.utils.DataManager;
+import com.example.olimpiadeui.utils.DataUtility;
 import com.example.olimpiadeui.utils.MatchAdapter;
 
 public class SchedulePage extends Activity {
-	private DataManager dataManager;
-	private ArrayAdapter matchItemArrayAdapter;
+	private ArrayAdapter<Match> matchItemArrayAdapter;
 	private int SID = -1;
 	private Button buttonPast;
 	private Button buttonUpcoming;
@@ -47,12 +46,9 @@ public class SchedulePage extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
-		dataManager = DataManager.getDataManager();
-		dataManager.open();
-		
 		Intent intent = getIntent();
 		SID = intent.getIntExtra("SID", -1);
-		Sport sport = dataManager.getSportBySID(SID);
+		Sport sport = DataUtility.getSportBySID(SID);
 		
 		((ImageView) findViewById(R.id.logo_sport_schedule)).setImageResource(sportLogoRound[SID - 1]);
 		((TextView) findViewById(R.id.text_sport_schedule)).setText(sport.getName());
@@ -119,13 +115,11 @@ public class SchedulePage extends Activity {
 	
 	@Override
 	protected void onResume() {
-		dataManager.open();
 		super.onResume();
 	}
 	
 	@Override
 	protected void onPause() {
-		dataManager.close();
 		super.onPause();
 	}
 	
@@ -176,7 +170,7 @@ public class SchedulePage extends Activity {
 	public List<Match> getAllMatchesByTimeAndSID(int SID, boolean isPast) {
 		long currTime = System.currentTimeMillis();
 		
-		List<Match> listAllMatches = dataManager.getAllMatchesByTime(currTime,
+		List<Match> listAllMatches = DataUtility.getAllMatchesByTime(currTime,
 				isPast);
 		
 		List<Match> retList = new ArrayList<Match>();

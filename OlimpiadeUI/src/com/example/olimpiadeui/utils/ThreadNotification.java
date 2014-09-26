@@ -23,12 +23,10 @@ public class ThreadNotification extends Thread {
 				Log.d("Thread", "masuk gan");
 				Thread.sleep(1000*60*5);
 				Log.d("Thread", "kelar gan");
-				DataManager dm = DataManager.getDataManager();
-				dm.open();
 				
 				long timeNow = System.currentTimeMillis() / 1000;
 				long timeQuery = (timeNow + 60 * 10) * 1000;
-				List<Match> listMatch = dm.getAllMatchesByTime(timeQuery, false);
+				List<Match> listMatch = DataUtility.getAllMatchesByTime(timeQuery, false);
 				List<Match> listNotifMatch = new ArrayList<Match>();
 				
 				String contentText = "";
@@ -39,15 +37,15 @@ public class ThreadNotification extends Thread {
 					int FID2 = m.getFID2();
 					int SID = m.getSID();
 					
-					String sportName = dm.getSportBySID(SID).getName();
+					String sportName = DataUtility.getSportBySID(SID).getName();
 					String facultyName1 = "";
 					String facultyName2 = "";
 					
 					if (FID1 != -1)
-						facultyName1 = dm.getFacultyByFID(FID1).getInitialName();
+						facultyName1 = DataUtility.getFaculty(FID1).getInitialName();
 					
 					if (FID2 != -1)
-						facultyName2 = dm.getFacultyByFID(FID2).getInitialName();
+						facultyName2 = DataUtility.getFaculty(FID2).getInitialName();
 					
 					if ((matchTime - timeNow) > (60*15))
 						continue;
@@ -58,8 +56,8 @@ public class ThreadNotification extends Thread {
 				
 				for (int i = 0; i < listNotifMatch.size(); ++i) {
 					Match m = listNotifMatch.get(i);
-					String sports = dm.getSportBySID(m.getSID()).getName();
-					String category = dm.getSportCategoryName(m.getSCID());
+					String sports = DataUtility.getSportBySID(m.getSID()).getName();
+					String category = DataUtility.getSportCategoryBySCID(m.getSCID()).getName();
 					String p1 = m.getpName1();
 					String p2 = m.getpName2();
 					String matchTime = m.getStartTime();

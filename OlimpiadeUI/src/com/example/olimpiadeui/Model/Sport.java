@@ -14,6 +14,12 @@ public class Sport {
 		this.logo = logo;
 	}
 
+	public Sport(Sport s) {
+		this.SID = s.getSID();
+		this.logo = s.getLogo();
+		this.name = s.getName();
+	}
+
 	public int getSID() {
 		return SID;
 	}

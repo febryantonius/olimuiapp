@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
 import com.example.olimpiadeui.MenuUtama;
+
 import com.example.olimpiadeui.utils.DataManager;
+import com.example.olimpiadeui.utils.DataUtility;
 
 public class MainActivity extends Activity {
 	private MainActivity host = this;
@@ -24,7 +25,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         DataManager.createDataManager(getApplicationContext());
-        //new DownloadData().execute();
+//        new DownloadData().execute();
+        DataUtility.inisialisasiData();
         Intent intent = new Intent(MainActivity.this, MenuUtama.class);
 		startActivityForResult(intent, 1);
 	}
@@ -49,7 +51,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(host, "Please Wait...", "Updating data...", true, true);
+			progressDialog = ProgressDialog.show(host, "Please Wait...", "Update data", true, false);
 			dm = DataManager.getDataManager();
 			dm.open();
 		}

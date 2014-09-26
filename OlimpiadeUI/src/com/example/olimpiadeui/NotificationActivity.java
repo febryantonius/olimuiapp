@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.Switch;
-import android.widget.ToggleButton;
 
 import com.example.olimpiadeui.Model.Faculty;
 import com.example.olimpiadeui.Model.Item;

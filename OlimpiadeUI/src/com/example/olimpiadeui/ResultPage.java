@@ -8,11 +8,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,14 +28,13 @@ import com.example.olimpiadeui.Model.Group;
 import com.example.olimpiadeui.Model.Match;
 import com.example.olimpiadeui.Model.Sport;
 import com.example.olimpiadeui.Model.SportCategory;
-import com.example.olimpiadeui.utils.DataManager;
+import com.example.olimpiadeui.utils.DataUtility;
 import com.example.olimpiadeui.utils.GroupAdapter;
 import com.example.olimpiadeui.utils.KnockoutAdapter;
 
 public class ResultPage extends Activity implements OnItemSelectedListener{
-	private DataManager dataManager;
 	private Button buttonGroup, buttonKnockout;
-	private int SID, SCID = -1;
+	private int SCID = -1;
 	List<SportCategory> listSportCategory;
 	private KnockoutAdapter knockoutAdapter;
 	private GroupAdapter groupAdapter;
@@ -56,14 +53,11 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
-		dataManager = DataManager.getDataManager();
-		dataManager.open();
-		
 		Intent intent = getIntent();
 		final int SID = intent.getIntExtra("SID", -1);
 		
-		listSportCategory = dataManager.getAllSportCategoriesBySID(SID);
-		Sport sport = dataManager.getSportBySID(SID);
+		listSportCategory = DataUtility.getAllSportCategoriesBySID(SID);
+		Sport sport = DataUtility.getSportBySID(SID);
 //		int sportLogo = sport.getLogo();
 		
 		ArrayList<String> listSCName = new ArrayList<String>();
@@ -79,7 +73,7 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 		spinner.setOnItemSelectedListener(this);
 		spinner.setSelection(0);
 		
-		List<Group> listAllGroup = dataManager.getAllGroupsBySCID(SCID);
+		List<Group> listAllGroup = DataUtility.getAllGroupsBySCID(SCID);
 		List<Group> listGroup = eliminateListGroup(listAllGroup);
 		groupAdapter = new GroupAdapter(this, listGroup);
 		
@@ -153,13 +147,11 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 
 	@Override
 	protected void onResume() {
-		dataManager.open();
 		super.onResume();
 	}
 	
 	@Override
 	protected void onPause() {
-		dataManager.close();
 		super.onPause();
 	}
 	
@@ -171,7 +163,7 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 		buttonGroup.setTextColor(Color.parseColor("#8F9194"));
 		((ListView) findViewById(R.id.listResult)).setVisibility(android.view.View.GONE);
 		
-		List<Integer> listAllKnockoutLvl = dataManager.getAllKnockoutLevelBySCID(SCID);
+		List<Integer> listAllKnockoutLvl = DataUtility.getAllKnockoutLevelBySCID(SCID);
 		List<Integer> listKnockoutLvl = eliminateListKnockout(listAllKnockoutLvl, SCID);
 		knockoutAdapter = new KnockoutAdapter(this, listKnockoutLvl, SCID);
 		
@@ -199,7 +191,7 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 //		((ListView) findViewById(R.id.listResult)).setVisibility(android.view.View.VISIBLE);
 //		((ListView) findViewById(R.id.listResult)).setAdapter(groupAdapter);
 
-		List<Group> listAllGroup = dataManager.getAllGroupsBySCID(SCID);
+		List<Group> listAllGroup = DataUtility.getAllGroupsBySCID(SCID);
 		List<Group> listGroup = eliminateListGroup(listAllGroup);
 		groupAdapter = new GroupAdapter(this, listGroup);
 		
@@ -221,7 +213,7 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 		List<Group> ret = new ArrayList<Group>();
 		
 		for(Group g : listAllGroup){
-			List<Match> matches = dataManager.getAllMatchesByGroup(g.getGID());
+			List<Match> matches = DataUtility.getAllMatchesByGroup(g.getGID());
 			
 			if(matches.size() != 0)
 				ret.add(g);
@@ -234,7 +226,7 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 		List<Integer> ret = new ArrayList<Integer>();
 		
 		for(Integer k : listAllKnockout){
-			List<Match> matches = dataManager.getAllMatchesByKnockoutLvlAndSCID(k, SCID);
+			List<Match> matches = DataUtility.getAllMatchesByKnockoutLvlAndSCID(k, SCID);
 			
 			if(matches.size() != 0)
 				ret.add(k);

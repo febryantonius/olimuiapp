@@ -24,7 +24,6 @@ import com.example.olimpiadeui.Model.Match;
 import com.example.olimpiadeui.Model.Sport;
 import com.example.olimpiadeui.Model.SportCategory;
 
-
 public class DataManager {
 	private SQLiteDatabase db;
 	private SQLiteHelper dbHelper;
@@ -98,7 +97,7 @@ public class DataManager {
 	
 	public DataManager(Context context) {
 		dbHelper = new SQLiteHelper(context);
-		this.context = context;
+		DataManager.context = context;
 	}
 	
 	public void open() throws SQLException {
@@ -226,14 +225,13 @@ public class DataManager {
 		cursor.close();
 	}
 	
-	public List<Match> getAllMatchesByGroup(int GID) {
+	public List<Match> getAllMatches() {
 		List<Match> matches = new ArrayList<Match>();
 		
-		String selection = SQLiteHelper.GROUP_ID + " = '" + GID + "'";
 		String sortOrder = SQLiteHelper.MILLIS_TIME + " COLLATE LOCALIZED ASC";
 		
 		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH, column_match, 
-				selection, null, null, null, sortOrder);
+				null, null, null, null, sortOrder);
 		
 		cursor.moveToFirst();
 		
@@ -247,80 +245,11 @@ public class DataManager {
 		return matches;
 	}
 	
-	public List<Match> getAllMatchesByFaculty(int FID) {
-		List<Match> matches = new ArrayList<Match>();
-		
-		String selection = SQLiteHelper.FACULTY_ID + " = '" + FID + "'";
-		String sortOrder = SQLiteHelper.FACULTY_ID + " COLLATE LOCALIZED ASC";
-		
-		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH, column_match, 
-				selection, null, null, null, sortOrder);
-		
-		cursor.moveToFirst();
-		
-		while (!cursor.isAfterLast()) {
-			Match match = cursorToMatch(cursor);
-			matches.add(match);
-			cursor.moveToNext();
-		}
-		
-		cursor.close();
-		return matches;
-	}
-	
-	public List<Match> getAllMatchesByKnockoutLvlAndSCID(int knockoutLvl, int SCID) {
-		List<Match> matches = new ArrayList<Match>();
-		
-		String selection = SQLiteHelper.SPORT_CATEGORY_ID + " = '" + SCID + "'";
-		Log.d("Bzz", SCID + " " + knockoutLvl);
-		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH, column_match, 
-				selection, null, null, null, null);
-		
-		cursor.moveToFirst();
-		
-		while (!cursor.isAfterLast()) {
-			Match match = cursorToMatch(cursor);
-			
-			if (match.getKnockoutLvl() == knockoutLvl)
-				matches.add(match);
-			
-			cursor.moveToNext();
-		}
-		
-		cursor.close();
-		return matches;
-	}
-	
-	public List<Match> getAllMatchesByTime(long millis_time, boolean past) {
-		List<Match> matches = new ArrayList<Match>();
-		millis_time /= 1000;
-		
-		String selection = SQLiteHelper.MILLIS_TIME + ((past)?" <= '":" > '") + millis_time + "'";
-		String sortOrder = SQLiteHelper.MILLIS_TIME + " COLLATE LOCALIZED " + ((past)?"DESC":"ASC");
-		Log.d("Yeah", selection);
-		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH,
-				column_match, selection + "", null, null, null, sortOrder);
-		
-		cursor.moveToFirst();
-		
-		while (!cursor.isAfterLast()) {
-			Match match = cursorToMatch(cursor);
-			matches.add(match);
-			cursor.moveToNext();
-		}
-		
-		cursor.close();
-		return matches;
-	}
-	
-	public List<SportCategory> getAllSportCategoriesBySID(int SID) {
+	public List<SportCategory> getAllSportCategories() {
 		List<SportCategory> sportCategories = new ArrayList<SportCategory>();
 		
-		String selection = SQLiteHelper.SPORT_ID + " = " + SID;
-		//String sortOrder = SQLiteHelper.MILLIS_TIME + " COLLATE LOCALIZED " + ((past)?"DESC":"ASC");
-		
 		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT_CATEGORY,
-				column_sport_category, selection, null, null, null, null);
+				column_sport_category, null, null, null, null, null);
 		
 		cursor.moveToFirst();
 		
@@ -352,29 +281,13 @@ public class DataManager {
 		return faculties;
 	}
 	
-	public Faculty getFacultyByFID(int FID) {
-		String selection = SQLiteHelper.FACULTY_ID + " = " + FID;
-		
-		Cursor cursor = db.query(SQLiteHelper.TABLE_FACULTY,
-				column_faculty, selection, null, null, null, null);
-		
-		cursor.moveToFirst();
-		
-		Faculty faculty = cursorToFaculty(cursor);
-		
-		cursor.close();
-		
-		return faculty;
-	}
-	
-	public List<Group> getAllGroupsBySCID(int SCID) {
+	public List<Group> getAllGroups() {
 		List<Group> groups = new ArrayList<Group>();
 		
-		String selection = SQLiteHelper.SPORT_CATEGORY_ID + " = " + SCID;
 		String sortOrder = SQLiteHelper.GROUP_ID + " COLLATE LOCALIZED ASC";
 		
 		Cursor cursor = db.query(SQLiteHelper.TABLE_GROUP,
-				column_group, selection, null, null, null, sortOrder);
+				column_group, null, null, null, null, sortOrder);
 		
 		cursor.moveToFirst();
 		
@@ -386,33 +299,6 @@ public class DataManager {
 		
 		cursor.close();
 		return groups;
-	}
-	
-	public List<Integer> getAllKnockoutLevelBySCID(int SCID) {
-		List<Integer> knockoutLvls = new ArrayList<Integer>();
-		int sz = 0;
-		
-		String selection = SQLiteHelper.SPORT_CATEGORY_ID + " = " + SCID;
-		String sortOrder = SQLiteHelper.KNOCKOUT_LEVEL + " COLLATE LOCALIZED DESC";
-		
-		Cursor cursor = db.query(SQLiteHelper.TABLE_MATCH,
-				column_match, selection, null, null, null, sortOrder);
-		
-		cursor.moveToFirst();
-		Log.d("Level", "" + cursor.getCount());
-		while (!cursor.isAfterLast()) {
-			int level = cursor.getInt(cursor.getColumnIndex(SQLiteHelper.KNOCKOUT_LEVEL));
-			
-			if ((level != -1) && ((sz == 0) || (knockoutLvls.get(sz - 1) != level))) {
-				knockoutLvls.add(level);
-				++sz;
-			}
-			
-			cursor.moveToNext();
-		}
-		
-		cursor.close();
-		return knockoutLvls;
 	}
 	
 	public List<Sport> getAllSports() {
@@ -431,69 +317,6 @@ public class DataManager {
 		
 		cursor.close();
 		return sports;
-	}
-	
-	public Sport getSportBySID(int SID) {
-		String selection = SQLiteHelper.SPORT_ID + " = " + SID;
-		
-		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT,
-				column_sport, selection, null, null, null, null);
-		
-		cursor.moveToFirst();
-		
-		Sport sport = cursorToSport(cursor);
-		
-		cursor.close();
-		
-		return sport;
-	}
-	
-	public String getSportCategoryName(int SCID) {
-		String selection = SQLiteHelper.SPORT_CATEGORY_ID + " = '" + SCID + "'";
-		
-		Cursor cursor = db.query(SQLiteHelper.TABLE_SPORT_CATEGORY,
-				column_sport_category, selection, null, null, null, null);
-		
-		cursor.moveToFirst();
-		
-		SportCategory sportCategory = cursorToSportCategory(cursor);
-		
-		cursor.close();
-		
-		return sportCategory.getName();
-	}
-	
-	public String getGroupName(int GID) {
-		String selection = SQLiteHelper.GROUP_ID + " = '" + GID + "'";
-		
-		Cursor cursor = db.query(SQLiteHelper.TABLE_GROUP,
-				column_group, selection, null, null, null, null);
-		
-		cursor.moveToFirst();
-		
-		Group group = cursorToGroup(cursor);
-		
-		cursor.close();
-		
-		return group.getName();
-	}
-	
-	public int getFacultyLogo(int FID) {
-		if (FID == -1)
-			return R.drawable.ui;
-		
-		String selection = SQLiteHelper.FACULTY_ID + " = '" + FID + "'";
-		
-		Cursor cursor = db.query(SQLiteHelper.TABLE_FACULTY,
-				column_faculty, selection, null, null, null, null);
-		
-		cursor.moveToFirst();
-		
-		Faculty faculty = cursorToFaculty(cursor);
-		
-		cursor.close();
-		
-		return faculty.getLogo();
 	}
 	
 	private long getLastUpdateTime(int LUID) {

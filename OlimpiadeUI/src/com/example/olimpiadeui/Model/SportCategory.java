@@ -15,6 +15,12 @@ public class SportCategory {
 		this.name = name;
 	}
 
+	public SportCategory(SportCategory sc) {
+		this.SCID = sc.getSCID();
+		this.SID = sc.getSID();
+		this.name = sc.getName();
+	}
+
 	public int getSCID() {
 		return SCID;
 	}

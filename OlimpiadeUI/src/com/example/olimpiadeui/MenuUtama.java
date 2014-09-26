@@ -10,7 +10,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
@@ -19,6 +18,7 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 
 import com.example.olimpiadeui.utils.DataManager;
+import com.example.olimpiadeui.utils.DataUtility;
 import com.example.olimpiadeui.utils.NotificationService;
 
 public class MenuUtama extends TabActivity implements OnTabChangeListener {
@@ -171,7 +171,7 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(host, "Please Wait...", "Updating data...", true, true);
+			progressDialog = ProgressDialog.show(host, "Please Wait...", "Update data", true, false);
 			dm = DataManager.getDataManager();
 			dm.open();
 		}
@@ -195,6 +195,9 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 		protected void onPostExecute(Void result) {
 			dm.close();
 			progressDialog.dismiss();
+
+			if (statusCode != -1)
+				DataUtility.inisialisasiData();
 			
 			String text = (statusCode != -1) ? "Data telah diperbarui" :
 				"Anda tidak terhubung dengan internet";

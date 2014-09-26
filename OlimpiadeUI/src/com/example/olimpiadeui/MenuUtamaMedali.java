@@ -4,43 +4,34 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.olimpiadeui.Model.Faculty;
-import com.example.olimpiadeui.utils.DataManager;
+import com.example.olimpiadeui.utils.DataUtility;
 import com.example.olimpiadeui.utils.FacultyAdapter;
 
 public class MenuUtamaMedali extends Activity {
-	private ArrayAdapter facultyItemArrayAdapter;
-	private DataManager dataManager;
+	private ArrayAdapter<Faculty> facultyItemArrayAdapter;
 	private List<Faculty> listFaculty;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_menu_utama_medali);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setupActionBar();
 		
 		Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/edelsans_regular.otf");
 		((TextView) findViewById(R.id.medals_title)).setTypeface(tf, Typeface.BOLD);
 		
-		dataManager = DataManager.getDataManager();
-		dataManager.open();
-		
-		listFaculty = dataManager.getAllFaculties();
+		listFaculty = DataUtility.getAllFaculties();
 		
 		listFaculty = sortFaculty(listFaculty);
 		
@@ -69,8 +60,7 @@ public class MenuUtamaMedali extends Activity {
 	
 	@Override
 	protected void onResume() {
-		dataManager.open();
-		listFaculty = dataManager.getAllFaculties();
+		listFaculty = DataUtility.getAllFaculties();
 		listFaculty = sortFaculty(listFaculty);
 		facultyItemArrayAdapter.clear();
 		facultyItemArrayAdapter.addAll(listFaculty);
@@ -80,7 +70,6 @@ public class MenuUtamaMedali extends Activity {
 	
 	@Override
 	protected void onPause() {
-		dataManager.close();
 		super.onPause();
 	}
 	

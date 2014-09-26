@@ -24,13 +24,12 @@ import android.widget.TextView;
 
 import com.example.olimpiadeui.Model.Faculty;
 import com.example.olimpiadeui.Model.Match;
-import com.example.olimpiadeui.utils.DataManager;
+import com.example.olimpiadeui.utils.DataUtility;
 import com.example.olimpiadeui.utils.MatchAdapter;
 
 public class MenuUtamaFilter extends Activity implements OnItemSelectedListener {
 	private ArrayAdapter<Match> matchItemArrayAdapter;
 	private ArrayAdapter<String> facultyAdapter;
-	private DataManager dataManager;
 	private List<Faculty> listFaculty;
 	private List<String> listFacultyName;
 	private int FID = -1;
@@ -46,10 +45,7 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 		Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/edelsans_regular.otf");
 		((TextView) findViewById(R.id.filter_title)).setTypeface(tf, Typeface.BOLD);
 		
-		dataManager = DataManager.getDataManager();
-		dataManager.open();
-		
-		listFaculty = dataManager.getAllFaculties();
+		listFaculty = DataUtility.getAllFaculties();
 		listFacultyName = new ArrayList<String>();
 		
 		listFacultyName.add("Pilih Fakultas");
@@ -70,7 +66,7 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 		((ImageView) findViewById(R.id.facultyLogoFilter)).setImageResource(R.drawable.ui);
 		
 		List<Match> listAllMatch =
-				dataManager.getAllMatchesByTime(System.currentTimeMillis(), false);
+				DataUtility.getAllMatchesByTime(System.currentTimeMillis(), false);
 		
 		List<Match> listMatch = new ArrayList<Match>();
 		
@@ -84,8 +80,6 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 		ListView listView = (ListView) findViewById(R.id.listScheduleFilter);
 		listView.setAdapter(matchItemArrayAdapter);
 		listView.setBackgroundColor(Color.parseColor("#FFFFFF"));
-		
-		dataManager.close();
 	}
 	
 	/**
@@ -143,12 +137,8 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 		((Button) findViewById(R.id.buttonUpcomingFilter)).setBackgroundColor(Color.parseColor("#C0C2C4"));
 		((Button) findViewById(R.id.buttonUpcomingFilter)).setTextColor(Color.parseColor("#8F9194"));
 		
-		dataManager.open();
-		
 		List<Match> listAllMatch =
-				dataManager.getAllMatchesByTime(System.currentTimeMillis(), true);
-		
-		dataManager.close();
+				DataUtility.getAllMatchesByTime(System.currentTimeMillis(), true);
 		
 		List<Match> listMatch = new ArrayList<Match>();
 		
@@ -177,12 +167,8 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 		((Button) findViewById(R.id.buttonPastFilter)).setBackgroundColor(Color.parseColor("#C0C2C4"));
 		((Button) findViewById(R.id.buttonPastFilter)).setTextColor(Color.parseColor("#8F9194"));
 		
-		dataManager.open();
-		
 		List<Match> listAllMatch =
-				dataManager.getAllMatchesByTime(System.currentTimeMillis(), false);
-		
-		dataManager.close();
+				DataUtility.getAllMatchesByTime(System.currentTimeMillis(), false);
 		
 		List<Match> listMatch = new ArrayList<Match>();
 		
@@ -214,8 +200,7 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 	
 	@Override
 	protected void onResume() {
-		dataManager.open();
-		listFaculty = dataManager.getAllFaculties();
+		listFaculty = DataUtility.getAllFaculties();
 		listFacultyName = new ArrayList<String>();
 		
 		listFacultyName.add("Pilih Fakultas");
@@ -234,7 +219,6 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 	
 	@Override
 	protected void onPause() {
-		dataManager.close();
 		super.onPause();
 	}
 }

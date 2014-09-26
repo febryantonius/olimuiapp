@@ -40,7 +40,7 @@ public class FacultyAdapter extends ArrayAdapter<Faculty> {
 		
 		final String tweet = "Perolehan medali " + currFaculty.getInitialName() + ": " + currFaculty.getGold() +
 				" emas, " + currFaculty.getSilver() + " perak, dan " + currFaculty.getBronze() +
-				" perunggu, menduduki peringkat " + (position + 1) + " #OlimUIApps";
+				" perunggu, menduduki peringkat " + (position + 1) + " " + R.string.hashtag;
 		final int pos = position;
 		convertView.setOnClickListener(new OnClickListener() {
 			

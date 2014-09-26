@@ -1,7 +1,5 @@
 package com.example.olimpiadeui.Model;
 
-import java.util.Date;
-
 public class Match {
 	//MILLIS TIME PAKE LONG
 	private int MID, GID, SID, SCID, FID1, FID2, score1, score2,

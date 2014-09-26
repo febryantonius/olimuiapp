@@ -9,7 +9,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,13 +18,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.olimpiadeui.Model.Sport;
-import com.example.olimpiadeui.utils.DataManager;
+import com.example.olimpiadeui.utils.DataUtility;
 import com.example.olimpiadeui.utils.SportAdapter;
 
 public class MenuUtamaBagan extends Activity {
 	ArrayAdapter<Sport> sportItemArrayAdapter;
 	private List<Sport> listSport;
-	private DataManager dataManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +35,7 @@ public class MenuUtamaBagan extends Activity {
 		Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/edelsans_regular.otf");
 		((TextView) findViewById(R.id.result_title)).setTypeface(tf, Typeface.BOLD);
 		
-		dataManager = DataManager.getDataManager();
-		dataManager.open();
-		
-		listSport = dataManager.getAllSports();
+		listSport = DataUtility.getAllSports();
 		
 		sportItemArrayAdapter = new SportAdapter(this, listSport);
 		((ListView) findViewById(R.id.listSportResult)).setAdapter(sportItemArrayAdapter);
@@ -75,9 +70,7 @@ public class MenuUtamaBagan extends Activity {
 	
 	@Override
 	protected void onResume() {
-		Log.d("resume", "oke");
-		dataManager.open();
-		listSport = dataManager.getAllSports();
+		listSport = DataUtility.getAllSports();
 		sportItemArrayAdapter.clear();
 		sportItemArrayAdapter.addAll(listSport);
 		sportItemArrayAdapter.notifyDataSetChanged();
@@ -87,8 +80,6 @@ public class MenuUtamaBagan extends Activity {
 	
 	@Override
 	protected void onPause() {
-		Log.d("pause", "oke");
-		dataManager.close();
 		super.onPause();
 	}
 }

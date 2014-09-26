@@ -14,6 +14,12 @@ public class Group {
 		this.name = name;
 	}
 
+	public Group(Group g) {
+		this.GID = g.getGID();
+		this.SCID = g.getSCID();
+		this.name = g.getName();
+	}
+
 	public int getGID() {
 		return GID;
 	}

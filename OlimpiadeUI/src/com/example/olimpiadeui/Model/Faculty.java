@@ -19,6 +19,16 @@ public class Faculty {
 		this.initialName = initialName;
 	}
 
+	public Faculty(Faculty f) {
+		this.FID = f.getFID();
+		this.gold = f.getGold();
+		this.silver = f.getSilver();
+		this.bronze = f.getBronze();
+		this.logo = f.getLogo();
+		this.name = f.getName();
+		this.initialName = f.getInitialName();
+	}
+
 	public int getFID() {
 		return FID;
 	}

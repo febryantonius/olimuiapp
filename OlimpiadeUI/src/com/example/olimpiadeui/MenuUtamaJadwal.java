@@ -9,7 +9,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,14 +18,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.olimpiadeui.Model.Sport;
-import com.example.olimpiadeui.utils.DataManager;
+import com.example.olimpiadeui.utils.DataUtility;
 import com.example.olimpiadeui.utils.SportAdapter;
 
 public class MenuUtamaJadwal extends Activity {
 //	ArrayAdapter sportItemArrayAdapter;
 	private static ArrayAdapter<Sport> sportItemArrayAdapter;
 	private static List<Sport> listSport;
-	private static DataManager dataManager;
+//	private static DataManager dataManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +38,10 @@ public class MenuUtamaJadwal extends Activity {
 		Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/edelsans_regular.otf");
 		((TextView) findViewById(R.id.schedule_title)).setTypeface(tf, Typeface.BOLD);
 		
-		dataManager = DataManager.getDataManager();
-		dataManager.open();
+//		dataManager = DataManager.getDataManager();
+//		dataManager.open();
 		
-		listSport = dataManager.getAllSports();
+		listSport = DataUtility.getAllSports();
 		
 		sportItemArrayAdapter = new SportAdapter(this, listSport);
 		((ListView) findViewById(R.id.listSportSchedule)).setAdapter(sportItemArrayAdapter);
@@ -80,9 +79,7 @@ public class MenuUtamaJadwal extends Activity {
 	
 	@Override
 	protected void onResume() {
-		dataManager.open();
-		Log.d("Cek list", listSport.size() + "");
-		listSport = dataManager.getAllSports();
+		listSport = DataUtility.getAllSports();
 		sportItemArrayAdapter.clear();
 		sportItemArrayAdapter.addAll(listSport);
 		sportItemArrayAdapter.notifyDataSetChanged();
@@ -91,14 +88,12 @@ public class MenuUtamaJadwal extends Activity {
 	
 	@Override
 	protected void onPause() {
-		dataManager.close();
-		Log.d("cek", "cek gan");
 		super.onPause();
 	}
 	
 	public static void updateGan() {
-		dataManager.open();
-		listSport = dataManager.getAllSports();
+//		dataManager.open();
+		listSport = DataUtility.getAllSports();
 		sportItemArrayAdapter.clear();
 		sportItemArrayAdapter.addAll(listSport);
 		sportItemArrayAdapter.notifyDataSetChanged();
