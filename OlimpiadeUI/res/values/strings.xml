@@ -42,7 +42,7 @@
     <string name="title_activity_notification">Notifikasi</string>
     <string name="title_activity_help_guide">Bantuan</string>
     <string name="title_activity_menu_utama">MenuUtama</string>
-    <string name="hashtag">#OlimUIApp</string>
+    <string name="hashtag">#OlimpiadeUIApp</string>
     <string name="hello_world">Hello world!</string>
 
 </resources>
