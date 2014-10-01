@@ -139,7 +139,8 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpFromSameTask(this);
+//			NavUtils.navigateUpFromSameTask(this);
+			onBackPressed();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

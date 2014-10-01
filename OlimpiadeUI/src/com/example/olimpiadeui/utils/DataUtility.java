@@ -17,6 +17,7 @@ public class DataUtility {
 	private static List<SportCategory> allSportCategories;
 	private static List<Group> allGroups;
 	private static List<Faculty> allFaculties;
+	private static boolean downloading = false;
 	
 	public static void inisialisasiData() {
 		DataManager dm = DataManager.getDataManager();
@@ -205,5 +206,17 @@ public class DataUtility {
 		}
 		
 		return ret;
+	}
+	
+	public static boolean isDownloading() {
+		return downloading;
+	}
+	
+	public static void startDownload() {
+		downloading = true;
+	}
+	
+	public static void finishDownload() {
+		downloading = false;
 	}
 }

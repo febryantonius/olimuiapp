@@ -16,7 +16,6 @@ public class HelpGuide extends Activity {
 		
 		Intent intent = getIntent();
 		int idGambar = intent.getIntExtra("gambarHelp", -1);
-//		Log.d("cek", "" + idGambar);
 		((ImageView) findViewById(R.id.gambarHelp)).setImageResource(idGambar);
 	}
 }

@@ -1,17 +1,24 @@
 package com.example.olimpiadeui;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.TabActivity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 import android.widget.TabHost.OnTabChangeListener;
@@ -23,21 +30,13 @@ import com.example.olimpiadeui.utils.NotificationService;
 
 public class MenuUtama extends TabActivity implements OnTabChangeListener {
 	TabHost tabHost;
-	private Activity activity = this;
-	private boolean downloading = false;
-	private ProgressDialog progressDialog;
-	private int statusCode = 400;
 	private MenuUtama host = this;
-//	private static ArrayAdapter sportAdapter;
-//	private static List<Sport> listSport;
-//	private DataManager dataManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_menu_utama);
-        activity = this;
 //        Log.d("main", "bikin service");
 //        Intent i = new Intent(this, NotificationService.class);
 //        this.startService(i);
@@ -79,15 +78,20 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
         tabHost.addTab(matchResultTab);
         tabHost.addTab(medalsTab);
         tabHost.addTab(filterTab);
+        
+//        new DownloadData().execute();
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		
+		if (DataUtility.isDownloading())
+			menu.findItem(R.id.action_refresh).setIcon(R.drawable.ic_action_loading);
+		
 		return true;
 	}
-	
 
 	@Override
 	public void onTabChanged(String arg0) {
@@ -114,7 +118,20 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
 			case R.id.action_refresh: {
-				new DownloadData().execute();
+				if (!DataUtility.isDownloading()) {
+					LayoutInflater inflater = getLayoutInflater();
+					ImageView iv = (ImageView) inflater.inflate(R.layout.refresh_action_view, null);
+					Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_element);
+					rotation.setRepeatCount(Animation.INFINITE);
+					iv.startAnimation(rotation);
+					
+					item.setActionView(iv);
+					ObjectAnimator anim = ObjectAnimator.ofInt(item, "rotation", 0, 360);
+					anim.setDuration(20000);
+					anim.start();
+					DownloadData asyncTask = new DownloadData(host, item);
+					asyncTask.execute();
+				}
 				
 				break;
 			}
@@ -138,40 +155,40 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 		return true;
 	}
 	
-	public int refreshData() {
-		DataManager dm = DataManager.getDataManager();
-		
-		dm.open();
-		int statusCode = dm.refreshDatabase();
-		
-		
-//		listSport = dm.getAllSports();
-//		sportAdapter.clear();
-//		sportAdapter.addAll(listSport);
-//		sportAdapter.notifyDataSetChanged();
-//		MenuUtamaJadwal.updateGan();
-		dm.close();
-		
-		return statusCode;
+	public void updateIcon(MenuItem item) {
+		item.getActionView().clearAnimation();
+		item.setActionView(null);
 	}
 	
-//	public static void setScheduleAdapter(ArrayAdapter aa) {
-//		sportAdapter = aa;
-//	}
-//	
-//	public static void setListSport(List<Sport> ls) {
-//		listSport = ls;
-//	}
-	
 	class DownloadData extends AsyncTask<Void, Void, Void> {
+		private MenuItem item;
 		private ProgressDialog progressDialog;
 		private int statusCode;
 		private DataManager dm;
 		
+		public DownloadData(Context context, MenuItem item) {
+			this.item = item;
+//			progressDialog = new ProgressDialog(context);
+//			
+//			progressDialog.setCancelable(true);
+//			progressDialog.setTitle("Please Wait...");
+//			progressDialog.setMessage("Update data");
+//			progressDialog.setIndeterminate(true);
+//			progressDialog.setOnCancelListener(new OnCancelListener() {
+//				@Override
+//				public void onCancel(DialogInterface dialog) {
+//					Log.d("tes", "yeah");
+//					cancel(true);
+//				}
+//			});
+		}
+		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(host, "Please Wait...", "Update data", true, false);
+			DataUtility.startDownload();
+//			progressDialog = ProgressDialog.show(host, "Please Wait...", "Update data", true, false);
+//			progressDialog.show();
 			dm = DataManager.getDataManager();
 			dm.open();
 		}
@@ -179,6 +196,7 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 		@Override
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
+			
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -194,7 +212,7 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 		@Override
 		protected void onPostExecute(Void result) {
 			dm.close();
-			progressDialog.dismiss();
+//			progressDialog.dismiss();
 
 			if (statusCode != -1)
 				DataUtility.inisialisasiData();
@@ -210,6 +228,8 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 			int tabNow = tabHost.getCurrentTab();
 			tabHost.setCurrentTab(0);
 			tabHost.setCurrentTab(tabNow);
+			DataUtility.finishDownload();
+			updateIcon(item);
 		}
 	}
 }

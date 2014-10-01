@@ -44,14 +44,14 @@ public class MainActivity extends Activity {
 	}
 	
 	class DownloadData extends AsyncTask<Void, Void, Void> {
-		private ProgressDialog progressDialog;
+//		private ProgressDialog progressDialog;
 		private int statusCode;
 		private DataManager dm;
 		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(host, "Please Wait...", "Update data", true, false);
+//			progressDialog = ProgressDialog.show(host, "Please Wait...", "Update data", true, false);
 			dm = DataManager.getDataManager();
 			dm.open();
 		}
@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			dm.close();
-			progressDialog.dismiss();
+//			progressDialog.dismiss();
 			
 			if (statusCode == -1) {
 				int duration = Toast.LENGTH_LONG;
