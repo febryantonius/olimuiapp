@@ -1,5 +1,7 @@
 package com.example.olimpiadeui.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import android.app.Activity;
@@ -109,13 +111,21 @@ public class KnockoutAdapter extends ArrayAdapter<Integer> {
 			
 			final String tweet = "Pertandingan " + cabang + " - " + kategori + " antara " + p1 +
 					((score1 == -1) ? "" : " (" + score1 + ")") + " vs " + ((score2 == -1) ? "" : "(" + score2 + ") ") +
-					p2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + ". Selamat!" + " " + R.string.hashtag;
+					p2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + ". Selamat!" + " #" + DataUtility.hashtag;
 			
 			child.setOnClickListener(new OnClickListener() {	
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					String tweetUrl = "https://twitter.com/intent/tweet?text=" + tweet;
+					String tweetUrl = "";
+					
+					try {
+						tweetUrl = "https://twitter.com/intent/tweet?text=" + URLEncoder.encode(tweet, "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 					Uri uri = Uri.parse(tweetUrl);
 					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

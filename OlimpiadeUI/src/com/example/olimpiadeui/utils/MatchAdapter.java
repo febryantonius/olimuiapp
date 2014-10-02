@@ -1,5 +1,7 @@
 package com.example.olimpiadeui.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import android.app.Activity;
@@ -122,11 +124,11 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 		if (isPast) {
 			tweet = "Pertandingan " + cabang + " - " + sC + " antara " + pName1 +
 						((score1 == -1) ? "" : " (" + score1 + ")") + " vs " + ((score2 == -1) ? "" : "(" + score2 + ") ") +
-						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + ". Selamat!" + " " + R.string.hashtag;
+						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + ". Selamat!" + " #" + DataUtility.hashtag;
 		}
 		else {
 			tweet = "Tonton pertandingan " + cabang + " - " + sC + " antara " + pName1 + " vs " +
-						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + " " + R.string.hashtag;
+						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + " #" + DataUtility.hashtag;
 		}
 		
 		convertView.setOnClickListener(new OnClickListener() {
@@ -134,7 +136,15 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				String tweetUrl = "https://twitter.com/intent/tweet?text=" + tweet;
+				String tweetUrl = "";
+				
+				try {
+					tweetUrl = "https://twitter.com/intent/tweet?text=" + URLEncoder.encode(tweet, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				Uri uri = Uri.parse(tweetUrl);
 				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

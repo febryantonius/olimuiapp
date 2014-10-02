@@ -1,10 +1,13 @@
 package com.example.olimpiadeui.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,14 +43,22 @@ public class FacultyAdapter extends ArrayAdapter<Faculty> {
 		
 		final String tweet = "Perolehan medali " + currFaculty.getInitialName() + ": " + currFaculty.getGold() +
 				" emas, " + currFaculty.getSilver() + " perak, dan " + currFaculty.getBronze() +
-				" perunggu, menduduki peringkat " + (position + 1) + " " + R.string.hashtag;
+				" perunggu, menduduki peringkat " + (position + 1) + " #OlimUIApp";
+		
 		final int pos = position;
 		convertView.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				String tweetUrl = "https://twitter.com/intent/tweet?text=" + tweet;
+				String tweetUrl = "";
+				try {
+					tweetUrl = "https://twitter.com/intent/tweet?text=" + URLEncoder.encode(tweet, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				Uri uri = Uri.parse(tweetUrl);
 				v.setSelected(true);
 				v.getFocusables(pos);

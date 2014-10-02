@@ -18,6 +18,7 @@ public class DataUtility {
 	private static List<Group> allGroups;
 	private static List<Faculty> allFaculties;
 	private static boolean downloading = false;
+	public static String hashtag = "OlimpiadeUIApp";
 	
 	public static void inisialisasiData() {
 		DataManager dm = DataManager.getDataManager();
