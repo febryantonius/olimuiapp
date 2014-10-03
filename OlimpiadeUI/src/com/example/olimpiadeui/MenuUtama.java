@@ -1,24 +1,14 @@
 package com.example.olimpiadeui;
 
-import android.animation.ObjectAnimator;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 import android.widget.TabHost.OnTabChangeListener;
@@ -31,6 +21,7 @@ import com.example.olimpiadeui.utils.NotificationService;
 public class MenuUtama extends TabActivity implements OnTabChangeListener {
 	TabHost tabHost;
 	private MenuUtama host = this;
+	private DownloadData asyncTask;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +70,13 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
         tabHost.addTab(medalsTab);
         tabHost.addTab(filterTab);
         
-//        new DownloadData().execute();
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		
-		if (DataUtility.isDownloading())
-			menu.findItem(R.id.action_refresh).setIcon(R.drawable.ic_action_loading);
+		onOptionsItemSelected(menu.findItem(R.id.action_refresh));
 		
 		return true;
 	}
@@ -119,17 +107,10 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 		switch(item.getItemId()) {
 			case R.id.action_refresh: {
 				if (!DataUtility.isDownloading()) {
-					LayoutInflater inflater = getLayoutInflater();
-					ImageView iv = (ImageView) inflater.inflate(R.layout.refresh_action_view, null);
-					Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_element);
-					rotation.setRepeatCount(Animation.INFINITE);
-					iv.startAnimation(rotation);
+					item.setActionView(R.layout.progressbar);
+					item.expandActionView();
 					
-					item.setActionView(iv);
-					ObjectAnimator anim = ObjectAnimator.ofInt(item, "rotation", 0, 360);
-					anim.setDuration(20000);
-					anim.start();
-					DownloadData asyncTask = new DownloadData(host, item);
+					asyncTask = new DownloadData(host, item);
 					asyncTask.execute();
 				}
 				
@@ -156,39 +137,24 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 	}
 	
 	public void updateIcon(MenuItem item) {
-		item.getActionView().clearAnimation();
+		item.collapseActionView();
 		item.setActionView(null);
 	}
 	
 	class DownloadData extends AsyncTask<Void, Void, Void> {
 		private MenuItem item;
-		private ProgressDialog progressDialog;
 		private int statusCode;
 		private DataManager dm;
 		
 		public DownloadData(Context context, MenuItem item) {
 			this.item = item;
-//			progressDialog = new ProgressDialog(context);
-//			
-//			progressDialog.setCancelable(true);
-//			progressDialog.setTitle("Please Wait...");
-//			progressDialog.setMessage("Update data");
-//			progressDialog.setIndeterminate(true);
-//			progressDialog.setOnCancelListener(new OnCancelListener() {
-//				@Override
-//				public void onCancel(DialogInterface dialog) {
-//					Log.d("tes", "yeah");
-//					cancel(true);
-//				}
-//			});
 		}
 		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			DataUtility.startDownload();
-//			progressDialog = ProgressDialog.show(host, "Please Wait...", "Update data", true, false);
-//			progressDialog.show();
+			
 			dm = DataManager.getDataManager();
 			dm.open();
 		}
@@ -212,8 +178,7 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 		@Override
 		protected void onPostExecute(Void result) {
 			dm.close();
-//			progressDialog.dismiss();
-
+			
 			if (statusCode != -1)
 				DataUtility.inisialisasiData();
 			

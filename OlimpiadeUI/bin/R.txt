@@ -484,9 +484,10 @@ int layout listrow_group 0x7f030026
 int layout match_group_result 0x7f030027
 int layout match_knockout_result 0x7f030028
 int layout medals 0x7f030029
-int layout refresh_action_view 0x7f03002a
-int layout sport 0x7f03002b
-int layout support_simple_spinner_dropdown_item 0x7f03002c
+int layout progressbar 0x7f03002a
+int layout refresh_action_view 0x7f03002b
+int layout sport 0x7f03002c
+int layout support_simple_spinner_dropdown_item 0x7f03002d
 int menu about 0x7f0c0000
 int menu activity_add_group 0x7f0c0001
 int menu activity_add_match 0x7f0c0002

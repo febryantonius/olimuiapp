@@ -7,7 +7,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,7 +42,7 @@ public class FacultyAdapter extends ArrayAdapter<Faculty> {
 		
 		final String tweet = "Perolehan medali " + currFaculty.getInitialName() + ": " + currFaculty.getGold() +
 				" emas, " + currFaculty.getSilver() + " perak, dan " + currFaculty.getBronze() +
-				" perunggu, menduduki peringkat " + (position + 1) + " #OlimUIApp";
+				" perunggu, menduduki peringkat " + (position + 1) + " #" + DataUtility.hashtag;
 		
 		final int pos = position;
 		convertView.setOnClickListener(new OnClickListener() {

@@ -1276,9 +1276,10 @@ containing a value of this type.
         public static final int match_group_result=0x7f030027;
         public static final int match_knockout_result=0x7f030028;
         public static final int medals=0x7f030029;
-        public static final int refresh_action_view=0x7f03002a;
-        public static final int sport=0x7f03002b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03002c;
+        public static final int progressbar=0x7f03002a;
+        public static final int refresh_action_view=0x7f03002b;
+        public static final int sport=0x7f03002c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03002d;
     }
     public static final class menu {
         public static final int about=0x7f0c0000;

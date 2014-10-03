@@ -17,6 +17,7 @@ public class DataUtility {
 	private static List<SportCategory> allSportCategories;
 	private static List<Group> allGroups;
 	private static List<Faculty> allFaculties;
+	private static List<Faculty> sortedFaculties;
 	private static boolean downloading = false;
 	public static String hashtag = "OlimpiadeUIApp";
 	
@@ -35,6 +36,7 @@ public class DataUtility {
 		allSportCategories = tempSportCategories;
 		allGroups = tempGroups;
 		allFaculties = tempFaculties;
+		sortedFaculties = sortFaculty(tempFaculties);
 		
 		dm.close();
 	}
@@ -182,6 +184,15 @@ public class DataUtility {
 		return ret;
 	}
 	
+	public static List<Faculty> getSortedFaculties() {
+		List<Faculty> ret = new ArrayList<Faculty>();
+		
+		for (Faculty f : sortedFaculties)
+			ret.add(f);
+		
+		return ret;
+	}
+	
 	public static Faculty getFaculty(int FID) {
 		for (Faculty f : allFaculties) {
 			if (f.getFID() == FID)
@@ -219,5 +230,41 @@ public class DataUtility {
 	
 	public static void finishDownload() {
 		downloading = false;
+	}
+	
+	private static List<Faculty> sortFaculty(List<Faculty> faculty) {
+		List<Faculty> ret = new ArrayList<Faculty>();
+		
+		for (Faculty f : faculty)
+			ret.add(new Faculty(f));
+		
+		int size = ret.size();
+		
+		for (int i = 1; i < size; ++i) {
+			Faculty temp = ret.get(i);
+			int j = i - 1;
+			
+			while ((j >= 0) && isHigher(temp, ret.get(j))) {
+				ret.set(j + 1, ret.get(j));
+				--j;
+			}
+			
+			ret.set(j + 1, temp);
+		}
+		
+		return ret;
+	}
+	
+	private static boolean isHigher(Faculty a, Faculty b) {
+		if (a.getGold() != b.getGold())
+			return (a.getGold() > b.getGold());
+		
+		if (a.getSilver() != b.getSilver())
+			return (a.getSilver() > b.getSilver());
+		
+		if (a.getBronze() != b.getBronze())
+			return (a.getBronze() > b.getBronze());
+		
+		return (a.getFID() < b.getFID());
 	}
 }

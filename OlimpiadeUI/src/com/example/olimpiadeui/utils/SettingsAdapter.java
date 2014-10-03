@@ -2,7 +2,6 @@ package com.example.olimpiadeui.utils;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
-import android.widget.Toast;
 
 import com.example.olimpiadeui.R;
 import com.example.olimpiadeui.Model.Item;

@@ -31,9 +31,7 @@ public class MenuUtamaMedali extends Activity {
 		Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/edelsans_regular.otf");
 		((TextView) findViewById(R.id.medals_title)).setTypeface(tf, Typeface.BOLD);
 		
-		listFaculty = DataUtility.getAllFaculties();
-		
-		listFaculty = sortFaculty(listFaculty);
+		listFaculty = DataUtility.getSortedFaculties();
 		
 		facultyItemArrayAdapter = new FacultyAdapter(this, listFaculty);
 		
@@ -60,8 +58,7 @@ public class MenuUtamaMedali extends Activity {
 	
 	@Override
 	protected void onResume() {
-		listFaculty = DataUtility.getAllFaculties();
-		listFaculty = sortFaculty(listFaculty);
+		listFaculty = DataUtility.getSortedFaculties();
 		facultyItemArrayAdapter.clear();
 		facultyItemArrayAdapter.addAll(listFaculty);
 		facultyItemArrayAdapter.notifyDataSetChanged();
@@ -71,36 +68,5 @@ public class MenuUtamaMedali extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-	}
-	
-	public List<Faculty> sortFaculty(List<Faculty> faculty) {
-		int size = faculty.size();
-		
-		for (int i = 1; i < size; ++i) {
-			Faculty temp = faculty.get(i);
-			int j = i - 1;
-			
-			while ((j >= 0) && isHigher(temp, faculty.get(j))) {
-				faculty.set(j + 1, faculty.get(j));
-				--j;
-			}
-			
-			faculty.set(j + 1, temp);
-		}
-		
-		return faculty;
-	}
-	
-	public boolean isHigher(Faculty a, Faculty b) {
-		if (a.getGold() != b.getGold())
-			return (a.getGold() > b.getGold());
-		
-		if (a.getSilver() != b.getSilver())
-			return (a.getSilver() > b.getSilver());
-		
-		if (a.getBronze() != b.getBronze())
-			return (a.getBronze() > b.getBronze());
-		
-		return (a.getFID() < b.getFID());
 	}
 }
