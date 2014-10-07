@@ -39,7 +39,7 @@ public class MainActivity extends Activity
 		
 		JSONObject val = new JSONObject();
 		try{
-			val.put("uid", uid);
+			val.put("UID", uid);
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
