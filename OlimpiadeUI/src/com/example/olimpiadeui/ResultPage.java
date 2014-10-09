@@ -3,6 +3,9 @@ package com.example.olimpiadeui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -108,6 +111,15 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 		}
 		
 		onClickGroupResult(linearLayout);
+		
+		JSONObject val = new JSONObject();
+		try{
+			val.put("UID", MainActivity.uid);
+			val.put("Sport", sport.getName());
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		Mixpanel.track("halaman hasil", val);
 	}
 
 	/**
@@ -179,6 +191,17 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 			listView.setVisibility(android.view.View.VISIBLE);
 			((LinearLayout) findViewById(R.id.noResult)).setVisibility(android.view.View.GONE);
 		}
+		
+		int SID = getIntent().getIntExtra("SID", -1);
+		JSONObject val = new JSONObject();
+		try{
+			val.put("UID", MainActivity.uid);
+			val.put("Sport", DataUtility.getSportBySID(SID).getName());
+			val.put("Tab", "Knockout");
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		Mixpanel.track("hasil group/knockout", val);
 	}
 	
 	public void onClickGroupResult(View view) {
@@ -207,6 +230,17 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 			listView.setVisibility(android.view.View.VISIBLE);
 			((LinearLayout) findViewById(R.id.noResult)).setVisibility(android.view.View.GONE);
 		}
+		
+		int SID = getIntent().getIntExtra("SID", -1);
+		JSONObject val = new JSONObject();
+		try{
+			val.put("UID", MainActivity.uid);
+			val.put("Sport", DataUtility.getSportBySID(SID).getName());
+			val.put("Tab", "Group");
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		Mixpanel.track("hasil group/knockout", val);
 	}
 	
 	public List<Group> eliminateListGroup(List<Group> listAllGroup) {
@@ -249,6 +283,17 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 		listView.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		
 		onClickGroupResult(linearLayout);
+		
+		int SID = getIntent().getIntExtra("SID", -1);
+		JSONObject val = new JSONObject();
+		try{
+			val.put("UID", MainActivity.uid);
+			val.put("Sport", DataUtility.getSportBySID(SID).getName());
+			val.put("Category", listSportCategory.get(pos).getName());
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		Mixpanel.track("hasil pilih kategori cabang", val);
 	}
 
 	@Override

@@ -3,6 +3,9 @@ package com.example.olimpiadeui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -76,6 +79,15 @@ public class SchedulePage extends Activity {
 			listView.setVisibility(android.view.View.VISIBLE);
 			((LinearLayout) findViewById(R.id.noSchedule)).setVisibility(android.view.View.GONE);
 		}
+		
+		JSONObject val = new JSONObject();
+		try{
+			val.put("UID", MainActivity.uid);
+			val.put("Sport", sport.getName());
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		Mixpanel.track("halaman jadwal", val);
 	}
 
 	/**
@@ -144,6 +156,16 @@ public class SchedulePage extends Activity {
 			((ListView) findViewById(R.id.listSchedule)).setVisibility(android.view.View.VISIBLE);
 			((LinearLayout) findViewById(R.id.noSchedule)).setVisibility(android.view.View.GONE);
 		}
+		
+		JSONObject val = new JSONObject();
+		try{
+			val.put("UID", MainActivity.uid);
+			val.put("Sport", DataUtility.getSportBySID(SID).getName());
+			val.put("Tab", "Past");
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		Mixpanel.track("jadwal past/upcoming", val);
 	}
 	
 	public void onClickUpcomingSchedule(View view) {
@@ -166,6 +188,16 @@ public class SchedulePage extends Activity {
 			((ListView) findViewById(R.id.listSchedule)).setVisibility(android.view.View.VISIBLE);
 			((LinearLayout) findViewById(R.id.noSchedule)).setVisibility(android.view.View.GONE);
 		}
+		
+		JSONObject val = new JSONObject();
+		try{
+			val.put("UID", MainActivity.uid);
+			val.put("Sport", DataUtility.getSportBySID(SID).getName());
+			val.put("Tab", "Upcoming");
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		Mixpanel.track("hasil past/upcoming", val);
 	}
 	
 	public List<Match> getAllMatchesByTimeAndSID(int SID, boolean isPast) {

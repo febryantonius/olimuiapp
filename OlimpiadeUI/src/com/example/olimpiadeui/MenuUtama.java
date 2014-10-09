@@ -1,5 +1,8 @@
 package com.example.olimpiadeui;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -114,16 +117,42 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 					asyncTask.execute();
 				}
 				
+				JSONObject val = new JSONObject();
+				try{
+					val.put("UID", MainActivity.uid);
+				}catch(JSONException e) {
+					e.printStackTrace();
+				}
+				Mixpanel.track("refresh", val);
+				
 				break;
 			}
 			case R.id.action_about: {
 				Intent intent = new Intent(MenuUtama.this, AboutActivity.class);
 				startActivity(intent);
+				
+				JSONObject val = new JSONObject();
+				try{
+					val.put("UID", MainActivity.uid);
+				}catch(JSONException e) {
+					e.printStackTrace();
+				}
+				Mixpanel.track("halaman tentang", val);
+				
 				break;
 			}
 			case R.id.action_help: {
 				Intent intent = new Intent(MenuUtama.this, HelpActivity.class);
 				startActivity(intent);
+				
+				JSONObject val = new JSONObject();
+				try{
+					val.put("UID", MainActivity.uid);
+				}catch(JSONException e) {
+					e.printStackTrace();
+				}
+				Mixpanel.track("halaman bantuan", val);
+				
 				break;
 			}
 //			case R.id.action_settings: {

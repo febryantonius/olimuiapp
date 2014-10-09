@@ -2,6 +2,9 @@ package com.example.olimpiadeui;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -49,6 +52,14 @@ public class MenuUtamaBagan extends Activity {
 				startActivity(intent);
 			}
 		});
+		
+		JSONObject val = new JSONObject();
+		try{
+			val.put("UID", MainActivity.uid);
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		Mixpanel.track("tab hasil", val);
 	}
 	
 	/**

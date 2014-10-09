@@ -2,6 +2,9 @@ package com.example.olimpiadeui;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -58,6 +61,14 @@ public class MenuUtamaJadwal extends Activity {
 		
 //		MainActivity.setScheduleAdapter(sportItemArrayAdapter);
 //		MainActivity.setListSport(listSport);
+		
+		JSONObject val = new JSONObject();
+		try{
+			val.put("UID", MainActivity.uid);
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		Mixpanel.track("tab jadwal", val);
 	}
 	
 	/**

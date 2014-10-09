@@ -4,6 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.olimpiadeui.MainActivity;
+import com.example.olimpiadeui.Mixpanel;
 import com.example.olimpiadeui.R;
 import com.example.olimpiadeui.Model.Group;
 import com.example.olimpiadeui.Model.Match;
@@ -104,6 +109,15 @@ public class GroupAdapter extends ArrayAdapter<Group> {
 					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					getContext().startActivity(intent);
+					
+					JSONObject val = new JSONObject();
+					try{
+						val.put("UID", MainActivity.uid);
+						val.put("Page", "Hasil");
+					}catch(JSONException e) {
+						e.printStackTrace();
+					}
+					Mixpanel.track("tweet", val);
 				}
 			});
 			

@@ -2,6 +2,9 @@ package com.example.olimpiadeui;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -37,6 +40,14 @@ public class MenuUtamaMedali extends Activity {
 		
 		ListView listViewFaculty = ((ListView) findViewById(R.id.listFaculty));
 		listViewFaculty.setAdapter(facultyItemArrayAdapter);
+		
+		JSONObject val = new JSONObject();
+		try{
+			val.put("UID", MainActivity.uid);
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		Mixpanel.track("tab medali", val);
 	}
 	
 	/**
