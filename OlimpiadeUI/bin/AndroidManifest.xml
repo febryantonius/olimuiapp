@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.olimpiadeui"
+    package="com.kawunglabs.olimpiadeuiapp"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme" >
         <activity
-            android:name="com.example.olimpiadeui.MainActivity"
+            android:name="com.kawunglabs.olimpiadeuiapp.MainActivity"
             android:label="@string/title_main_activity"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -27,81 +27,81 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.olimpiadeui.MenuUtamaJadwal"
+            android:name="com.kawunglabs.olimpiadeuiapp.MenuUtamaJadwal"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.example.olimpiadeui.MenuUtamaBagan"
+            android:name="com.kawunglabs.olimpiadeuiapp.MenuUtamaBagan"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.example.olimpiadeui.MenuUtamaMedali"
+            android:name="com.kawunglabs.olimpiadeuiapp.MenuUtamaMedali"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.example.olimpiadeui.MenuUtamaFilter"
+            android:name="com.kawunglabs.olimpiadeuiapp.MenuUtamaFilter"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.example.olimpiadeui.SchedulePage"
+            android:name="com.kawunglabs.olimpiadeuiapp.SchedulePage"
             android:label="@string/title_activity_schedule_page"
-            android:parentActivityName="com.example.olimpiadeui.MenuUtama"
+            android:parentActivityName="com.kawunglabs.olimpiadeuiapp.MenuUtama"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.olimpiadeui.MenuUtama" />
+                android:value="com.kawunglabs.olimpiadeuiapp.MenuUtama" />
         </activity>
         <activity
-            android:name="com.example.olimpiadeui.ResultPage"
+            android:name="com.kawunglabs.olimpiadeuiapp.ResultPage"
             android:label="@string/title_activity_result_page"
-            android:parentActivityName="com.example.olimpiadeui.MenuUtama"
+            android:parentActivityName="com.kawunglabs.olimpiadeuiapp.MenuUtama"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.olimpiadeui.MenuUtama" />
+                android:value="com.kawunglabs.olimpiadeuiapp.MenuUtama" />
         </activity>
         <activity
-            android:name="com.example.olimpiadeui.AboutActivity"
+            android:name="com.kawunglabs.olimpiadeuiapp.AboutActivity"
             android:label="@string/title_about_activity"
-            android:parentActivityName="com.example.olimpiadeui.MenuUtama"
+            android:parentActivityName="com.kawunglabs.olimpiadeuiapp.MenuUtama"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.olimpiadeui.MenuUtama" />
+                android:value="com.kawunglabs.olimpiadeuiapp.MenuUtama" />
         </activity>
         <activity
-            android:name="com.example.olimpiadeui.HelpActivity"
+            android:name="com.kawunglabs.olimpiadeuiapp.HelpActivity"
             android:label="@string/title_help_activity"
-            android:parentActivityName="com.example.olimpiadeui.MenuUtama"
+            android:parentActivityName="com.kawunglabs.olimpiadeuiapp.MenuUtama"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.olimpiadeui.MenuUtama" />
+                android:value="com.kawunglabs.olimpiadeuiapp.MenuUtama" />
         </activity>
 
         <service
-            android:name="com.example.olimpiadeui.utils.NotificationService"
+            android:name="com.kawunglabs.olimpiadeuiapp.utils.NotificationService"
             android:enabled="true" />
 
         <activity
-            android:name="com.example.olimpiadeui.HelpGuide"
+            android:name="com.kawunglabs.olimpiadeuiapp.HelpGuide"
             android:label="@string/title_activity_help_guide"
             android:screenOrientation="portrait" >
         </activity>
 
         <!--
         <activity
-            android:name="com.example.olimpiadeui.NotificationActivity"
+            android:name="com.kawunglabs.olimpiadeuiapp.NotificationActivity"
             android:label="@string/title_activity_notification"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.example.olimpiadeui.MenuUtama" >
+            android:parentActivityName="com.kawunglabs.olimpiadeuiapp.MenuUtama" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.olimpiadeui.MenuUtama" />
+                android:value="com.kawunglabs.olimpiadeuiapp.MenuUtama" />
         </activity>
         -->
         <activity
-            android:name="com.example.olimpiadeui.MenuUtama"
+            android:name="com.kawunglabs.olimpiadeuiapp.MenuUtama"
             android:label="@string/title_activity_menu_utama" >
         </activity>
     </application>
