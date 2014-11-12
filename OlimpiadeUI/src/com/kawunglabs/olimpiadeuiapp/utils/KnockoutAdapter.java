@@ -81,8 +81,10 @@ public class KnockoutAdapter extends ArrayAdapter<Integer> {
 			int FID2 = m.getFID2();
 			String p1 = m.getpName1();
 			String p2 = m.getpName2();
-			int logoFaculty1 = DataUtility.getFaculty(FID1).getLogo();
-			int logoFaculty2 = DataUtility.getFaculty(FID2).getLogo();
+			int logoFaculty1 = (FID1 != -1) ?
+						DataUtility.getFaculty(FID1).getLogo() : R.drawable.ui;
+			int logoFaculty2 = (FID2 != -1) ?
+						DataUtility.getFaculty(FID2).getLogo() : R.drawable.ui;
 			int score1 = m.getScore1();
 			int score2 = m.getScore2();
 			String knockoutKey = m.getKnockoutKey();

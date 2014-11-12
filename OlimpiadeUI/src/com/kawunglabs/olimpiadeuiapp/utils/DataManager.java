@@ -428,17 +428,16 @@ public class DataManager {
 		long currTime = java.lang.System.currentTimeMillis();
 		int status = 400;
 		
-		String urlAPI = "http://dev.nandarustam.id/olimuiapp/api/get_";
+		String urlAPI = "http://dev.nandarustam.id/olimuiapp/api_v2/get_";
 		
 		try {
 			for (int numAPI = 0; numAPI < api.length; ++numAPI) {
-				Log.d("waktu", "" + (lastUpdatedTime / 1000));
+//				Log.d("waktu", "" + (lastUpdatedTime / 1000));
 				URL u = new URL(urlAPI + api[numAPI] + "/" + (lastUpdatedTime / 1000));
-//				URL u = new URL("http://www.labs.pandagostudio.com/olimpiadeui/api/get_" + api[numAPI] + "/0");
 				HttpURLConnection con = (HttpURLConnection) u.openConnection();
 				con.setRequestMethod("GET");
 				con.setDoOutput(true);
-				Log.d("API", numAPI + "");
+//				Log.d("API", numAPI + "");
 				
 				con.connect();
 				status = con.getResponseCode();
@@ -506,7 +505,6 @@ public class DataManager {
 							}
 						}
 						
-						createLastUpdated(1, currTime);
 						break;
 					}
 				}
@@ -518,7 +516,9 @@ public class DataManager {
 			status = -1;
 		}
 		
-		Log.d("A", "Sukses");
+		createLastUpdated(1, currTime);
+		
+//		Log.d("A", "Sukses");
 		
 		return status; // success code
 	}
