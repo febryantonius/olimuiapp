@@ -4,8 +4,8 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -98,11 +98,27 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.kawunglabs.olimpiadeuiapp.MenuUtama" />
-        </activity>
+        </activity>
         -->
         <activity
             android:name="com.kawunglabs.olimpiadeuiapp.MenuUtama"
             android:label="@string/title_activity_menu_utama" >
+        </activity>
+        <activity
+            android:name="com.kawunglabs.olimpiadeuiapp.SchedulePageOther"
+            android:label="@string/title_activity_schedule_page_other"
+            android:parentActivityName="com.kawunglabs.olimpiadeuiapp.MenuUtamaJadwal" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kawunglabs.olimpiadeuiapp.MenuUtamaJadwal" />
+        </activity>
+        <activity
+            android:name="com.kawunglabs.olimpiadeuiapp.ResultPageOther"
+            android:label="@string/title_activity_result_page_other"
+            android:parentActivityName="com.kawunglabs.olimpiadeuiapp.MenuUtamaBagan" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kawunglabs.olimpiadeuiapp.MenuUtamaBagan" />
         </activity>
     </application>
 

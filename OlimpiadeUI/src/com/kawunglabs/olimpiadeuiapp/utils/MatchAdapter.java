@@ -57,8 +57,8 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 		String pName2 = p2;
 		int FID1 = currMatch.getFID1();
 		int FID2 = currMatch.getFID2();
-		int logoFaculty1 = DataUtility.getFaculty(FID1).getLogo();
-		int logoFaculty2 = DataUtility.getFaculty(FID2).getLogo();
+		int logoFaculty1 = (FID1 != -1) ? DataUtility.getFaculty(FID1).getLogo() : R.drawable.ui;
+		int logoFaculty2 = (FID2 != -1) ? DataUtility.getFaculty(FID2).getLogo() : R.drawable.ui;
 		int score1 = currMatch.getScore1();
 		int score2 = currMatch.getScore2();
 		

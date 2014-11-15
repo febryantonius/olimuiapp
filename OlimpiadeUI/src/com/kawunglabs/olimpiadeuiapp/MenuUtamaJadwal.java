@@ -53,7 +53,18 @@ public class MenuUtamaJadwal extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 				int position, long id) {
 				
-				Intent intent = new Intent(MenuUtamaJadwal.this, SchedulePage.class);
+				Intent intent;
+				String sportName = listSport.get(position).getName();
+				
+				if (sportName.equalsIgnoreCase("atletik") ||
+						sportName.equalsIgnoreCase("renang") || 
+						sportName.equalsIgnoreCase("taekwondo")) {
+					intent = new Intent(MenuUtamaJadwal.this, SchedulePageOther.class);
+				}
+				else {
+					intent = new Intent(MenuUtamaJadwal.this, SchedulePage.class);
+				}
+				
 				intent.putExtra("SID", listSport.get(position).getSID());
 				startActivity(intent);
 			}

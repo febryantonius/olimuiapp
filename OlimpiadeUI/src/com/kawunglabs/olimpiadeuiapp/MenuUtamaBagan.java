@@ -47,7 +47,18 @@ public class MenuUtamaBagan extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 				int position, long id) {
 				
-				Intent intent = new Intent(MenuUtamaBagan.this, ResultPage.class);
+				Intent intent;
+				String sportName = listSport.get(position).getName();
+				
+				if (sportName.equalsIgnoreCase("atletik") ||
+						sportName.equalsIgnoreCase("renang") || 
+						sportName.equalsIgnoreCase("taekwondo")) {
+					intent = new Intent(MenuUtamaBagan.this, ResultPageOther.class);
+				}
+				else {
+					intent = new Intent(MenuUtamaBagan.this, ResultPage.class);
+				}
+				
 				intent.putExtra("SID", listSport.get(position).getSID());
 				startActivity(intent);
 			}

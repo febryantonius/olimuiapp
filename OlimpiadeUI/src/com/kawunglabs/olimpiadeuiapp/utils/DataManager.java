@@ -1,6 +1,9 @@
 package com.kawunglabs.olimpiadeuiapp.utils;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,8 +33,8 @@ public class DataManager {
 	private static DataManager dm;
 	private static Context context;
 	
-	private String[] api = {"faculties", "groups", "matches",
-			"sports", "sport_categories", "deleted"};
+	private String[] api = {"faculties", "groups", "matches", "sports",
+			"sport_categories", "deleted", "schedule_other", "result_other"};
 	
 //	private String[] initialFaculty = {"FK", "FKG", "FMIPA", "FT", "FH", "FE",
 //			"FIB", "FPsi", "FISIP", "FKM", "Fasilkom", "FIK", "FF", "Vokasi"};
@@ -428,11 +431,14 @@ public class DataManager {
 		long currTime = java.lang.System.currentTimeMillis();
 		int status = 400;
 		
+//		Log.d("waktu", "" + (lastUpdatedTime / 1000));
+		
 		String urlAPI = "http://dev.nandarustam.id/olimuiapp/api_v2/get_";
 		
 		try {
 			for (int numAPI = 0; numAPI < api.length; ++numAPI) {
 //				Log.d("waktu", "" + (lastUpdatedTime / 1000));
+//				Log.d("url", urlAPI + api[numAPI] + "/" + (lastUpdatedTime / 1000));
 				URL u = new URL(urlAPI + api[numAPI] + "/" + (lastUpdatedTime / 1000));
 				HttpURLConnection con = (HttpURLConnection) u.openConnection();
 				con.setRequestMethod("GET");
@@ -442,6 +448,9 @@ public class DataManager {
 				con.connect();
 				status = con.getResponseCode();
 				
+				if ((status != 200) && (status != 201))
+					break;
+//				Log.d("code", "" + status);
 				switch (status) {
 					case 200:
 					case 201: {
@@ -451,7 +460,7 @@ public class DataManager {
 						switch (numAPI) {
 							case 0: {
 								JSONArray listFaculty = new JSONArray(input);
-								
+//								Log.d("faculty", "" + listFaculty.length());
 								for (int i = 0; i < listFaculty.length(); ++i) {
 									JSONObject obj = listFaculty.getJSONObject(i);
 									createFaculty(obj);
@@ -469,7 +478,8 @@ public class DataManager {
 							}
 							case 2: {
 								JSONArray listMatch = new JSONArray(input);
-								
+
+//								Log.d("match", "" + listMatch.length());
 								for (int i = 0; i < listMatch.length(); ++i) {
 									JSONObject obj = listMatch.getJSONObject(i);
 									createMatch(obj);
@@ -503,8 +513,31 @@ public class DataManager {
 								}
 								break;
 							}
+							case 6: {
+								JSONArray listScheduleOther = new JSONArray(input);
+								
+								FileOutputStream fos = DataManager.getContext().openFileOutput(api[numAPI] + ".json", Context.MODE_PRIVATE);
+								fos.write(listScheduleOther.toString(3).getBytes());
+								fos.close();
+							}
+							case 7: {
+								JSONArray listScheduleOther = new JSONArray(input);
+								
+								FileOutputStream fos = DataManager.getContext().openFileOutput(api[numAPI] + ".json", Context.MODE_PRIVATE);
+								fos.write(listScheduleOther.toString(3).getBytes());
+								fos.close();
+							}
 						}
 						
+						break;
+					}
+					case 400: {
+//						InputStream is = con.getErrorStream();
+//						BufferedReader in = new BufferedReader(new InputStreamReader(is));
+//						String inputLine;
+//						while ((inputLine = in.readLine()) != null) {
+//							Log.d("error", inputLine);
+//						}
 						break;
 					}
 				}
@@ -516,7 +549,10 @@ public class DataManager {
 			status = -1;
 		}
 		
-		createLastUpdated(1, currTime);
+		if ((status == 200) || (status == 201))
+			createLastUpdated(1, currTime);
+		else
+			status = -1;
 		
 //		Log.d("A", "Sukses");
 		

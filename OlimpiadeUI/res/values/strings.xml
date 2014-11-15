@@ -44,5 +44,7 @@
     <string name="title_activity_menu_utama">MenuUtama</string>
     <string name="hashtag">#OlimpiadeUIApp</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_schedule_page_other">Jadwal</string>
+    <string name="title_activity_result_page_other">Hasil</string>
 
 </resources>

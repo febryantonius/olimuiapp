@@ -214,8 +214,7 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 			String text = (statusCode != -1) ? "Data telah diperbarui" :
 				"Anda tidak terhubung dengan internet";
 			
-			int duration = (statusCode != -1) ? Toast.LENGTH_SHORT :
-				Toast.LENGTH_LONG;
+			int duration = Toast.LENGTH_LONG;
 			
 			Toast toast = Toast.makeText(MenuUtama.this, text, duration);
 			toast.show();

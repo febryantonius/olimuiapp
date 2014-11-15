@@ -1,9 +1,19 @@
 package com.kawunglabs.olimpiadeuiapp.utils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
 
 import com.kawunglabs.olimpiadeuiapp.Model.Faculty;
 import com.kawunglabs.olimpiadeuiapp.Model.Group;
@@ -18,6 +28,7 @@ public class DataUtility {
 	private static List<Group> allGroups;
 	private static List<Faculty> allFaculties;
 	private static List<Faculty> sortedFaculties;
+	private static JSONArray schedule_other, result_other;
 	private static boolean downloading = false;
 	public static String hashtag = "OlimpiadeUIApp";
 	
@@ -30,6 +41,32 @@ public class DataUtility {
 		List<SportCategory> tempSportCategories = dm.getAllSportCategories();
 		List<Group> tempGroups = dm.getAllGroups();
 		List<Faculty> tempFaculties = dm.getAllFaculties();
+		
+		try {
+			String jsonString = readFile("schedule_other.json");
+			
+			if (jsonString == null)
+				schedule_other = null;
+			else
+				schedule_other = new JSONArray(jsonString);
+		} catch (JSONException e) {
+			schedule_other = null;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			String jsonString = readFile("result_other.json");
+			
+			if (jsonString == null)
+				result_other = null;
+			else
+				result_other = new JSONArray(jsonString);
+		} catch (JSONException e) {
+			result_other = null;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		allMatches = tempMatches;
 		allSports = tempSports;
@@ -266,5 +303,66 @@ public class DataUtility {
 			return (a.getBronze() > b.getBronze());
 		
 		return (a.getFID() < b.getFID());
+	}
+	
+	private static String readFile(String filename) {
+		String json = null;
+		
+		try {
+			FileInputStream fis = DataManager.getContext().openFileInput(filename);
+			
+			int size = fis.available();
+			
+			byte[] buffer = new byte[size];
+			
+			fis.read(buffer);
+			fis.close();
+			
+			json = new String(buffer, "UTF-8");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return null;
+		}
+		
+		return json;
+	}
+	
+	public static String getMatchesOther(String sportName) {
+		if (schedule_other == null)
+			return "Tidak Ada Pertandingan";
+		
+		for (int i = 0; i < schedule_other.length(); ++i) {
+			try {
+				JSONObject obj = schedule_other.getJSONObject(i);
+				
+				String ret = obj.getString(sportName.toLowerCase());
+				
+				if (ret.length() != 0)
+					return ret;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return "Tidak Ada Pertandingan";
+	}
+	
+	public static JSONArray getResultsOther(String sportName) {
+		if (result_other == null)
+			return null;
+		
+		for (int i = 0; i < result_other.length(); ++i) {
+			try {
+				JSONObject obj = result_other.getJSONObject(i);
+				
+				JSONArray ret = obj.getJSONArray(sportName.toLowerCase());
+				
+				return ret;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
 	}
 }
