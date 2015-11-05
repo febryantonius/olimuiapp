@@ -83,14 +83,6 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 		ListView listView = (ListView) findViewById(R.id.listScheduleFilter);
 		listView.setAdapter(matchItemArrayAdapter);
 		listView.setBackgroundColor(Color.parseColor("#FFFFFF"));
-		
-		JSONObject val = new JSONObject();
-		try{
-			val.put("UID", MainActivity.uid);
-		}catch(JSONException e) {
-			e.printStackTrace();
-		}
-		Mixpanel.track("tab filter", val);
 	}
 	
 	/**
@@ -121,15 +113,6 @@ public class MenuUtamaFilter extends Activity implements OnItemSelectedListener 
 			((ListView) findViewById(R.id.listScheduleFilter)).setVisibility(android.view.View.GONE);
 			((ImageView) findViewById(R.id.facultyLogoFilter)).setImageResource(R.drawable.ui);
 			((LinearLayout) findViewById(R.id.noFilter)).setVisibility(android.view.View.GONE);
-			
-			JSONObject val = new JSONObject();
-			try{
-				val.put("UID", MainActivity.uid);
-				val.put("Fakultas", "UI");
-			}catch(JSONException e) {
-				e.printStackTrace();
-			}
-			Mixpanel.track("filter pilih fakultas", val);
 		}
 		else {
 			FID = listFaculty.get(pos - 1).getFID();

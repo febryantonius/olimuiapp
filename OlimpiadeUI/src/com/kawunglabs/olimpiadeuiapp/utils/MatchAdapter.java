@@ -128,11 +128,11 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 		if (isPast) {
 			tweet = "Pertandingan " + cabang + " - " + sC + " antara " + pName1 +
 						((score1 == -1) ? "" : " (" + score1 + ")") + " vs " + ((score2 == -1) ? "" : "(" + score2 + ") ") +
-						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + ". Selamat!" + " #" + DataUtility.hashtag;
+						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + ". Selamat!" + " #" + DataUtility.hashtag + " http://app.olimpiadeui.com";
 		}
 		else {
 			tweet = "Tonton pertandingan " + cabang + " - " + sC + " antara " + pName1 + " vs " +
-						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + " #" + DataUtility.hashtag;
+						pName2 + " pada " + tanggal + " " + waktu + " @ " + lokasi + " #" + DataUtility.hashtag + " http://app.olimpiadeui.com";
 		}
 		
 		convertView.setOnClickListener(new OnClickListener() {

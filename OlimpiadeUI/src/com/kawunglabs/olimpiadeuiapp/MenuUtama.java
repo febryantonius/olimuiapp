@@ -107,59 +107,100 @@ public class MenuUtama extends TabActivity implements OnTabChangeListener {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()) {
-			case R.id.action_refresh: {
-				if (!DataUtility.isDownloading()) {
-					item.setActionView(R.layout.progressbar);
-					item.expandActionView();
-					
-					asyncTask = new DownloadData(host, item);
-					asyncTask.execute();
-				}
-				
-				JSONObject val = new JSONObject();
-				try{
-					val.put("UID", MainActivity.uid);
-				}catch(JSONException e) {
-					e.printStackTrace();
-				}
-				Mixpanel.track("refresh", val);
-				
-				break;
-			}
-			case R.id.action_about: {
-				Intent intent = new Intent(MenuUtama.this, AboutActivity.class);
-				startActivity(intent);
-				
-				JSONObject val = new JSONObject();
-				try{
-					val.put("UID", MainActivity.uid);
-				}catch(JSONException e) {
-					e.printStackTrace();
-				}
-				Mixpanel.track("halaman tentang", val);
-				
-				break;
-			}
-			case R.id.action_help: {
-				Intent intent = new Intent(MenuUtama.this, HelpActivity.class);
-				startActivity(intent);
-				
-				JSONObject val = new JSONObject();
-				try{
-					val.put("UID", MainActivity.uid);
-				}catch(JSONException e) {
-					e.printStackTrace();
-				}
-				Mixpanel.track("halaman bantuan", val);
-				
-				break;
-			}
-//			case R.id.action_settings: {
-//				Intent intent = new Intent(MenuUtama.this, NotificationActivity.class);
-//				startActivity(intent);
+//		switch(item.getItemId()) {
+//			case R.id.action_refresh: {
+//				if (!DataUtility.isDownloading()) {
+//					item.setActionView(R.layout.progressbar);
+//					item.expandActionView();
+//					
+//					asyncTask = new DownloadData(host, item);
+//					asyncTask.execute();
+//				}
+//				
+//				JSONObject val = new JSONObject();
+//				try{
+//					val.put("UID", MainActivity.uid);
+//				}catch(JSONException e) {
+//					e.printStackTrace();
+//				}
+//				Mixpanel.track("refresh", val);
+//				
 //				break;
 //			}
+//			case R.id.action_about: {
+//				Intent intent = new Intent(MenuUtama.this, AboutActivity.class);
+//				startActivity(intent);
+//				
+//				JSONObject val = new JSONObject();
+//				try{
+//					val.put("UID", MainActivity.uid);
+//				}catch(JSONException e) {
+//					e.printStackTrace();
+//				}
+//				Mixpanel.track("halaman tentang", val);
+//				
+//				break;
+//			}
+//			case R.id.action_help: {
+//				Intent intent = new Intent(MenuUtama.this, HelpActivity.class);
+//				startActivity(intent);
+//				
+//				JSONObject val = new JSONObject();
+//				try{
+//					val.put("UID", MainActivity.uid);
+//				}catch(JSONException e) {
+//					e.printStackTrace();
+//				}
+//				Mixpanel.track("halaman bantuan", val);
+//				
+//				break;
+//			}
+////			case R.id.action_settings: {
+////				Intent intent = new Intent(MenuUtama.this, NotificationActivity.class);
+////				startActivity(intent);
+////				break;
+////			}
+//		}
+
+		// R.id is no longer available in switch. must be using if-else
+		if(item.getItemId() == R.id.action_refresh) {
+			if (!DataUtility.isDownloading()) {
+				item.setActionView(R.layout.progressbar);
+				item.expandActionView();
+				
+				asyncTask = new DownloadData(host, item);
+				asyncTask.execute();
+			}
+			
+			JSONObject val = new JSONObject();
+			try{
+				val.put("UID", MainActivity.uid);
+			}catch(JSONException e) {
+				e.printStackTrace();
+			}
+			Mixpanel.track("refresh", val);
+		}else if(item.getItemId() == R.id.action_about){
+			Intent intent = new Intent(MenuUtama.this, AboutActivity.class);
+			startActivity(intent);
+			
+			JSONObject val = new JSONObject();
+			try{
+				val.put("UID", MainActivity.uid);
+			}catch(JSONException e) {
+				e.printStackTrace();
+			}
+			Mixpanel.track("halaman tentang", val);
+		}else if(item.getItemId() == R.id.action_help) {
+			Intent intent = new Intent(MenuUtama.this, HelpActivity.class);
+			startActivity(intent);
+			
+			JSONObject val = new JSONObject();
+			try{
+				val.put("UID", MainActivity.uid);
+			}catch(JSONException e) {
+				e.printStackTrace();
+			}
+			Mixpanel.track("halaman bantuan", val);
 		}
 		
 		return true;

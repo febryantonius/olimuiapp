@@ -72,14 +72,6 @@ public class MenuUtamaJadwal extends Activity {
 		
 //		MainActivity.setScheduleAdapter(sportItemArrayAdapter);
 //		MainActivity.setListSport(listSport);
-		
-		JSONObject val = new JSONObject();
-		try{
-			val.put("UID", MainActivity.uid);
-		}catch(JSONException e) {
-			e.printStackTrace();
-		}
-		Mixpanel.track("tab jadwal", val);
 	}
 	
 	/**

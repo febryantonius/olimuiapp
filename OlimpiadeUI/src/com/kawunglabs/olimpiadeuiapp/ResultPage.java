@@ -110,7 +110,7 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 			((LinearLayout) findViewById(R.id.noResult)).setVisibility(android.view.View.GONE);
 		}
 		
-		onClickGroupResult(linearLayout);
+		openDefault(linearLayout);
 		
 		JSONObject val = new JSONObject();
 		try{
@@ -165,6 +165,17 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 	@Override
 	protected void onPause() {
 		super.onPause();
+	}
+	
+	public void openDefault(View view)
+	{
+		List<Group> listAllGroup = DataUtility.getAllGroupsBySCID(SCID);
+		List<Group> listGroup = eliminateListGroup(listAllGroup);
+		if(listGroup.size() > 0){
+			onClickGroupResult(view);
+		}else{
+			onClickKnockoutResult(view);
+		}
 	}
 	
 	public void onClickKnockoutResult(View view) {
@@ -282,7 +293,7 @@ public class ResultPage extends Activity implements OnItemSelectedListener{
 		listView.setVisibility(android.view.View.VISIBLE);
 		listView.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		
-		onClickGroupResult(linearLayout);
+		openDefault(linearLayout);
 		
 		int SID = getIntent().getIntExtra("SID", -1);
 		JSONObject val = new JSONObject();

@@ -63,14 +63,6 @@ public class MenuUtamaBagan extends Activity {
 				startActivity(intent);
 			}
 		});
-		
-		JSONObject val = new JSONObject();
-		try{
-			val.put("UID", MainActivity.uid);
-		}catch(JSONException e) {
-			e.printStackTrace();
-		}
-		Mixpanel.track("tab hasil", val);
 	}
 	
 	/**
